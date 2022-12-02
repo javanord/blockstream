@@ -10,6 +10,7 @@ import { CustomerComponent } from './components/customer/customer.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { SmartTradeComponent } from './components/smart-trade/smart-trade.component';
 import { TradeBlotterComponent } from './components/trade-blotter/trade-blotter.component';
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { TradeBlotterComponent } from './components/trade-blotter/trade-blotter.
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

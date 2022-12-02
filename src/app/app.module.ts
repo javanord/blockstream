@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SharedModule } from './shared/shared.module';
 import { TokenizationComponent } from './components/tokenization/tokenization.component';
 import { CustomerComponent } from './components/customer/customer.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { CustomerComponent } from './components/customer/customer.component';
     LoginComponent,
     TokenizationComponent,
     CustomerComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,

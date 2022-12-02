@@ -5,3 +5,7 @@
 * {
     color: white;
 }
+input::placeholder{
+    color: white;
+    font-style: italic;
+}

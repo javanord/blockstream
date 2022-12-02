@@ -1,0 +1,11 @@
+.margin-right-20 {
+    margin-right: 20px;
+}
+
+* {
+    color: white;
+}
+input::placeholder{
+    color: white;
+    font-style: italic;
+}

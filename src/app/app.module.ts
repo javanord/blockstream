@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { TokenizationComponent } from './components/tokenization/tokenization.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { SmartTradeComponent } from './components/smart-trade/smart-trade.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { RegistrationComponent } from './components/registration/registration.co
     TokenizationComponent,
     CustomerComponent,
     RegistrationComponent,
+    SmartTradeComponent,
   ],
   imports: [
     BrowserModule,

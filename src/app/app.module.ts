@@ -10,7 +10,9 @@ import { CustomerComponent } from './components/customer/customer.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { SmartTradeComponent } from './components/smart-trade/smart-trade.component';
 import { TradeBlotterComponent } from './components/trade-blotter/trade-blotter.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { HttpClientModule } from '@angular/common/http'
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

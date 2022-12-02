@@ -9,6 +9,7 @@ import { TokenizationComponent } from './components/tokenization/tokenization.co
 import { CustomerComponent } from './components/customer/customer.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { SmartTradeComponent } from './components/smart-trade/smart-trade.component';
+import { TradeBlotterComponent } from './components/trade-blotter/trade-blotter.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { SmartTradeComponent } from './components/smart-trade/smart-trade.compon
     CustomerComponent,
     RegistrationComponent,
     SmartTradeComponent,
+    TradeBlotterComponent,
   ],
   imports: [
     BrowserModule,

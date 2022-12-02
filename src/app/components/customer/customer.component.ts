@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./customer.component.css']
 })
 export class CustomerComponent {
-
+  logo:string ="https://cashflows-uat.traiana.com/web/uu/img/OSTTRA_Logo.PNG";
 }

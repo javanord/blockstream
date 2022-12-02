@@ -1,13 +1,22 @@
-<app-header></app-header>
-<ul class="nav justify-content-center">
-    <li class="nav-item" routerLinkActive="active-link">
-      <a class="nav-link active" aria-current="page" routerLink="/customer/tokenization">Tokenization</a>
-    </li>
-    <li class="nav-item" routerLinkActive="active-link">
-      <a class="nav-link" routerLink="/customer/smart-trade">Smart Trade</a>
-    </li>
-    <li class="nav-item" routerLinkActive="active-link">
-      <a class="nav-link" routerLink="/customer/trade-blotter">Trade Blotter</a>
-    </li>
-  </ul>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <img src="{{logo}}" alt="logo"/>
+    </div>
+    <div class="col-md-9 menu-list">
+        <div class="inline-block ">
+          <a class="text-decoration-none align-middle" 
+           routerLink="/customer/tokenization" routerLinkActive="active-link">Tokenization</a>
+          <a class="text-decoration-none align-middle" routerLinkActive="active-link"
+           routerLink="/customer/smart-trade">Smart Trade</a>
+          <a class="text-decoration-none align-middle" routerLinkActive="active-link"
+          routerLink="/customer/trade-blotter">Trade Blotter</a>
+        </div>
+    </div>
+    
+  </div>
+
+</div>
+
 <router-outlet></router-outlet>

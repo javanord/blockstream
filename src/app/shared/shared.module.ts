@@ -14,7 +14,8 @@ import { SideMenuComponent } from './layouts/side-menu/side-menu.component';
     CommonModule
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    SideMenuComponent
   ]
 })
 export class SharedModule { }

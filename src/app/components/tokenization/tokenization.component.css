@@ -6,6 +6,9 @@
     color: white;
 }
 input::placeholder{
-    color: white;
+   color: white;
     font-style: italic;
+}
+input[type=text]{
+    color: white;
 }

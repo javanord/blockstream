@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomerService } from 'src/app/services/customer.service';
 import { Currency } from 'src/models/currency.model';
 
@@ -15,9 +15,9 @@ export class TokenizationComponent implements OnInit {
   constructor(private customerService: CustomerService) {
     this.tokenForm = new FormGroup({
       depositCurr: new FormControl(null),
-      depositAmount: new FormControl(0),
-      withdrawCurr: new FormControl(''),
-      withdrawAmount: new FormControl(0)
+      depositAmount: new FormControl(''),
+      withdrawCurr: new FormControl(null),
+      withdrawAmount: new FormControl('')
     })
   }
 

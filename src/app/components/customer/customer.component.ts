@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class CustomerComponent {
   logo:string ="https://cashflows-uat.traiana.com/web/uu/img/OSTTRA_Logo.PNG";
+
+  constructor(private route:Router){
+   
+  }
+  logout(){
+    this.route.navigate(['/login']);
+  }
 }

@@ -1,6 +1,8 @@
 .active-link {
-    
     color: white;
+}
+.log:hover{
+    color: aqua;
 }
 a{
     font-size: 20px;

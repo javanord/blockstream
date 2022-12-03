@@ -4,17 +4,23 @@
     <div class="col-md-3">
       <img src="{{logo}}" alt="logo"/>
     </div>
-    <div class="col-md-9 menu-list">
-        <div class="inline-block ">
-          <a class="text-decoration-none align-middle" 
-           routerLink="/customer/tokenization" routerLinkActive="active-link">Tokenization</a>
-          <a class="text-decoration-none align-middle" routerLinkActive="active-link"
-           routerLink="/customer/smart-trade">Smart Trade</a>
-          <a class="text-decoration-none align-middle" routerLinkActive="active-link"
-          routerLink="/customer/trade-blotter">Trade Blotter</a>
-        </div>
+    <div class="offset-md-9">
+      <a class="text-white text-decoration-none text-right log "
+     (click)="logout()">
+        Logout</a>
     </div>
-    
+  </div>
+  <div class="row">
+    <div class="col-md-9 offset-md-3 menu-list">
+      <div class="inline-block ">
+        <a class="text-decoration-none align-middle" 
+         routerLink="/customer/tokenization" routerLinkActive="active-link">Tokenization</a>
+        <a class="text-decoration-none align-middle" routerLinkActive="active-link"
+         routerLink="/customer/smart-trade">Smart Trade</a>
+        <a class="text-decoration-none align-middle" routerLinkActive="active-link"
+        routerLink="/customer/trade-blotter">Trade Blotter</a>
+      </div>
+  </div>
   </div>
 
 </div>

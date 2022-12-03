@@ -9,3 +9,7 @@ input::placeholder{
     color: white;
     font-style: italic;
 }
+
+td, th {
+    width: 200px;
+}

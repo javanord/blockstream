@@ -18,13 +18,20 @@
                     <th>Status</th>
                     <th>Failure Reason</th>
                 </tr>
-                <tr>
-                    <td>---</td>
-                    <td>---</td>
-                    <td>---</td>
-                    <td>---</td>
-                    <td>---</td>
-                    <td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td>
+                <tr *ngFor="let trade of smartTradesList">
+                    <td></td>
+                    <td>{{trade.id}}</td>
+                    <td>{{trade.valueDate}}</td>
+                    <td>{{trade.counterParty}}</td>
+                    <td>{{trade.direction}}</td>
+                    <td>{{trade.currencyBuy}}</td>
+                    <td>{{trade.currencySell}}</td>
+                    <td>{{trade.amount}}</td>
+                    <td>{{trade.rate}}</td>
+                    <td>{{trade.contraAmount}}</td>
+                    <td>{{trade.valueDate}}</td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </table>
             

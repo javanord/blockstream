@@ -22,7 +22,7 @@ export class AuthService {
 
   public createUser(user: any) {
     return this.http.post(`${this.baseUrl}/admin/users`, {...user, authorities: 
-      ["ROLE_USER"]}, {headers: {
+      ["ROLE_USER","ROLE_ADMIN"]}, {headers: {
       'Authorization':
       'Bearer ' + localStorage.getItem('token')
     }});

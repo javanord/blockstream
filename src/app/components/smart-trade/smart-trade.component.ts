@@ -38,9 +38,20 @@ export class SmartTradeComponent implements OnInit {
 
   submitSmartTrade() {
     const formData = this.smartTradeForm.value;
-    this.customerService.submitSmartTrade(formData).subscribe(res => {
+    const userHash = localStorage.getItem('userHash');
+    this.customerService.submitSmartTrade({...formData, tradingParty: userHash}).subscribe(res => {
       alert('Smart trade submitted successfully');
-      this.smartTradeForm
+      this.smartTradeForm.patchValue({
+      counterParty: null,
+      currencyBuy: 0,
+      currencySell: 0,
+      rate: '',
+      amount: 0,
+      contraAmount: 0,
+      valueDate: '',
+      transactionId: '',
+      direction: ''
+      })
     });
   }
 

@@ -38,4 +38,11 @@ export class CustomerService {
       'Bearer ' + localStorage.getItem('token')
     }})
   }
+
+  getSmartTrades() {
+    return this.http.get(`${this.baseUrl}/smart-trades`, {headers: {
+      'Authorization':
+      'Bearer ' + localStorage.getItem('token')
+    }})
+  }
 }

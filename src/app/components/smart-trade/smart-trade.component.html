@@ -10,7 +10,7 @@
                     </td>
                     <td>
                         <select class="form-select form-control bg-dark border-0" aria-label="Default select example" formControlName="counterParty">
-                            <option *ngFor="let user of usersList" [value]="user?.login">{{user?.firstName}}</option>
+                            <option *ngFor="let user of usersList" [value]="user?.createdBy">{{user?.firstName}}</option>
                         </select>
                     </td>
                 </tr>

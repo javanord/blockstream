@@ -27,14 +27,14 @@ export class LoginComponent {
     this.authService.login(formVal.username, formVal.password).subscribe((data: any) => {
       const userData: any = this.decodeTokenService.decode(data['id_token']);
       localStorage.setItem('token', data['id_token']);
-      if(userData['auth'].includes(Roles.ROLE_ADMIN)) {
+      if((userData['auth'].includes(Roles.ROLE_ADMIN) && userData['sub'] === 'admin')) {
         this.router.navigate(['register']);
       } else {
         this.router.navigate(['customer']);
       }
 
       this.authService.getUser(formVal.username).subscribe((res: any) => {
-        console.log(res);
+        localStorage.setItem('userHash', res['createdBy']);
       })
     })
 }

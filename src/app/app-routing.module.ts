@@ -17,6 +17,7 @@ const routes: Routes = [
     {path:'trade-blotter',component:TradeBlotterComponent}
   ]},
   {path:'register',component:RegistrationComponent}
+
 ];
 
 @NgModule({

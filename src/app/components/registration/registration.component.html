@@ -1,5 +1,8 @@
 <div class="container mt-3" >
-    <div class="row justify-content-center">
+    <div class="row">
+        <a class="text-decoration-none text-end logout mt-3" (click)="logout()"><h4>Logout</h4></a>
+    </div>
+    <div class="row justify-content-center" style="margin-top: 17%;">
         <div class="col-md-6 text-center">
             <img src="{{imagineLogo}}" alt="logo" height="125px">
         </div>
@@ -7,12 +10,14 @@
     <div class="row justify-content-center">
         <div class="col-md-4 col-sm-4 ">
             <h4 class="text-center mt-3 mb-3 text-white">Register</h4>
-            <form action="">
+            <form #useForm ="ngForm">
                 <div class="input-group mb-3 mt-3">
                     <div class="input-group-prepend ">
                       <span class="input-group-text border-dark" id="basic-addon1"><i class="bi bi-person-circle"></i></span>
                     </div>
-                    <input type="text" class="form-control bg-dark text-white border-0" placeholder="Customer Name" aria-label="Username" aria-describedby="basic-addon1">
+                    
+                    <input type="text" class="form-control bg-dark text-white border-0" 
+                    placeholder="Customer Name" aria-label="Username" aria-describedby="basic-addon1">
                 </div>
                 <div class="input-group mb-3 mt-3">
                     <div class="input-group-prepend">

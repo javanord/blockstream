@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class RegistrationComponent {
   imagineLogo:string = "assets/media/imagine.svg";
+  constructor(private route:Router){
+
+  }
+  logout(){
+    this.route.navigate(['/login']);
+  }
 }

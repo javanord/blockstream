@@ -21,7 +21,7 @@ export class AuthService {
     })
   }
 
-  public createUser(user: User) {
+  public createUser(user: any) {
     return this.http.post(`${this.baseUrl}/admin/users`, user);
   }
 }

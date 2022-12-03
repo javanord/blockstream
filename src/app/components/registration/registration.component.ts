@@ -22,8 +22,15 @@ export class RegistrationComponent {
 
   register() {
     const formData = this.customerForm.value;
-    this.authService.createUser(formData).subscribe((res) => {
-      console.log(res);
+    this.authService.createUser(formData).subscribe((res: any) => {
+      if(res?.login) {
+        alert(res?.firstName + ' created successfully');
+        this.customerForm.patchValue({
+          firstName: '',
+          email: '',
+          login: ''
+        })
+      }
     });
   }
 

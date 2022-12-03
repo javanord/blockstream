@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { User } from 'src/models/user.model';
 
 const apiEndpoints = {}
 
@@ -22,6 +21,17 @@ export class AuthService {
   }
 
   public createUser(user: any) {
-    return this.http.post(`${this.baseUrl}/admin/users`, user);
+    return this.http.post(`${this.baseUrl}/admin/users`, {...user, authorities: 
+      ["ROLE_USER"]}, {headers: {
+      'Authorization':
+      'Bearer ' + localStorage.getItem('token')
+    }});
+  };
+
+  public getUser(login: string) {
+    return this.http.get(`${this.baseUrl}/admin/users/${login}`, {headers: {
+      'Authorization':
+      'Bearer ' + localStorage.getItem('token')
+    }});
   }
 }

@@ -1,15 +1,20 @@
 .active-link {
-    color: white;
+  color: white;
 }
-.log:hover{
-    color: aqua;
+.log:hover {
+  color: aqua;
 }
-a{
-    font-size: 20px;
-     font-weight: bold;
-     padding: 10px;
-     color: rgb(236, 86, 169);
+a {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  color: rgb(236, 86, 169);
 }
-.menu-list{
-    margin-top: 7%;
+.menu-list {
+  margin: 1rem 0 2rem;
+  padding-left: 0;
+}
+
+.top-container {
+  max-width: 80%;
 }

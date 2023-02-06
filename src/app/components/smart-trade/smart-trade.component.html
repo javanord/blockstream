@@ -1,99 +1,172 @@
-<div style="margin-top: 15px;" class="container">
-    <h4 class="text-center">Smart Trade</h4>
-    <div class="row">
-        <div class="col-md-8  d-flex justify-content-center" style="display: flex; justify-content: center;">
-
-            <table class="table" [formGroup]="smartTradeForm">
-                <tr>
-                    <td>
-                        <label class="">Counter Party</label>
-                    </td>
-                    <td>
-                        <select class="form-select form-control bg-dark border-0" aria-label="Default select example" formControlName="counterParty">
-                            <option *ngFor="let user of usersList" [value]="user?.createdBy">{{user?.firstName}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Currency Buy</label>
-                    </td>
-                    <td>
-                        <select class="form-select form-control border-0 bg-dark" aria-label="Default select example" formControlName="currencyBuy"
-                           >
-                            <option *ngFor="let curr of currenciesList" [value]="curr.currencyCode">{{curr.currencyName}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Currency Sell</label>
-                    </td>
-                    <td>
-                        <select class="form-select form-control bg-dark border-0" aria-label="Default select example" formControlName="currencySell"
-                           >
-                           <option *ngFor="let curr of currenciesList" [value]="curr.currencyCode">{{curr.currencyName}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Rate</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control bg-dark border-0" value="0" formControlName="rate" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Amount</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control bg-dark border-0" formControlName="amount">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Contra Amount</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control bg-dark border-0" formControlName="contraAmount">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label >Value Date</label>
-                    </td>
-                    <td>
-                        <input type="date" class="form-control bg-dark border-0" formControlName="valueDate">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label >Transaction ID</label>
-                    </td>
-                    <td>
-                        <input type="text" class="form-control bg-dark border-0" formControlName="transactionId">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label >Direction</label>
-                    </td>
-                    <td>
-                        <input type="text" class="form-control bg-dark border-0" formControlName="direction">
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-md-2 offset-md-1">
-            <app-side-menu></app-side-menu>
-        </div>
+<div class="container top-container">
+  <div class="row row-heading">
+    <div class="col-md-8">
+      <h3>Smart Trade</h3>
     </div>
-    <div class="row">
-        <div class="col-9" style="display: flex; justify-content: center; margin-top: 20px">
-            <button type="button" class="btn btn-primary m-3" (click)="submitSmartTrade()">Submit</button>
-            <button type="button" class="btn btn-primary m-3">Cancel</button>
-        </div>
+  </div>
+  <!-- <h4 class="text-center">Smart Trade</h4> -->
+  <div class="row">
+    <div
+      class="col-md-8 d-flex justify-content-center"
+      style="display: flex; justify-content: center"
+    >
+      <table class="table" [formGroup]="smartTradeForm">
+        <tr>
+          <td>
+            <label class="">Counter Party</label>
+          </td>
+          <td>
+            <div class="select-toggle">
+              <select
+                class="form-select form-control bg-dark border-0"
+                aria-label="Default select example"
+                formControlName="counterParty"
+              >
+                <option
+                  *ngFor="let user of usersList"
+                  [value]="user?.createdBy"
+                >
+                  {{ user?.firstName }}
+                </option>
+              </select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Currency Buy</label>
+          </td>
+          <td>
+            <div class="select-toggle">
+              <select
+                class="form-select form-control border-0 bg-dark"
+                aria-label="Default select example"
+                formControlName="currencyBuy"
+              >
+                <option
+                  *ngFor="let curr of currenciesList"
+                  [value]="curr.currencyCode"
+                >
+                  {{ curr.currencyName }}
+                </option>
+              </select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Currency Sell</label>
+          </td>
+          <td>
+            <div class="select-toggle">
+              <select
+                class="form-select form-control bg-dark border-0"
+                aria-label="Default select example"
+                formControlName="currencySell"
+              >
+                <option
+                  *ngFor="let curr of currenciesList"
+                  [value]="curr.currencyCode"
+                >
+                  {{ curr.currencyName }}
+                </option>
+              </select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Rate</label>
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control bg-dark border-0"
+              value="0"
+              formControlName="rate"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Amount</label>
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control bg-dark border-0"
+              formControlName="amount"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Contra Amount</label>
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control bg-dark border-0"
+              formControlName="contraAmount"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Value Date</label>
+          </td>
+          <td>
+            <input
+              type="date"
+              class="form-control bg-dark border-0"
+              formControlName="valueDate"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Transaction ID</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              class="form-control bg-dark border-0"
+              formControlName="transactionId"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Direction</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              class="form-control bg-dark border-0"
+              formControlName="direction"
+            />
+          </td>
+        </tr>
+      </table>
     </div>
+    <div class="col-md-2 offset-md-1">
+      <app-side-menu></app-side-menu>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="btn-container">
+        <button
+          type="button"
+          class="btn button-sm btn-primary m-3"
+          (click)="submitSmartTrade()"
+        >
+          Submit
+        </button>
+        <button type="button" class="btn button-sm btn-primary m-3">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,51 +1,55 @@
-<div style="margin-top: 2rem; margin-left: 1rem;" class="container-fluid">
-    <h3 class="text-center">Trade Blotter</h3>
-    <div class="row" >
-        <div class="col-md-10">
-            <table class="table border border-white">
-                <tr>
-                    <th>Select</th>
-                    <th>Trade Id</th>
-                    <th>Trade Date</th>
-                    <th>Counter Party</th>
-                    <th>Buy/Sell</th>
-                    <th>Currency Buy</th>
-                    <th>Currency Sell</th>
-                    <th>Amount</th>
-                    <th>Rate</th>
-                    <th>Contra Amount</th>
-                    <th>Value Date</th>
-                    <th>Status</th>
-                    <th>Failure Reason</th>
-                </tr>
-                <tr *ngFor="let trade of smartTradesList">
-                    <td></td>
-                    <td>{{trade.id}}</td>
-                    <td>{{trade.valueDate}}</td>
-                    <td>{{trade.counterParty}}</td>
-                    <td>{{trade.direction}}</td>
-                    <td>{{trade.currencyBuy}}</td>
-                    <td>{{trade.currencySell}}</td>
-                    <td>{{trade.amount}}</td>
-                    <td>{{trade.rate}}</td>
-                    <td>{{trade.contraAmount}}</td>
-                    <td>{{trade.valueDate}}</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-            
-        </div>
-        
-        <div class="col-md-1 mx-3">
-            <app-side-menu></app-side-menu>
-        </div>
+<div class="container top-container">
+  <div class="row row-heading">
+    <div class="col-md-8">
+      <h3>Trade Blotter</h3>
     </div>
-    <div class="row">
-        <div class="col-md-9" style="display: flex; justify-content: center; margin-top: 20px">
-            <button type="button" class="btn btn-success m-3">Accept</button>
-            <button type="button" class="btn btn-danger m-3">Reject</button>
-            <button type="button" class="btn btn-primary m-3">Settle</button>
-        </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table border border-white">
+        <tr>
+          <th>Select</th>
+          <th>Trade Id</th>
+          <th>Trade Date</th>
+          <th>Counter Party</th>
+          <th>Buy/Sell</th>
+          <th>Currency Buy</th>
+          <th>Currency Sell</th>
+          <th>Amount</th>
+          <th>Rate</th>
+          <th>Contra Amount</th>
+          <th>Value Date</th>
+          <th>Status</th>
+          <th>Failure Reason</th>
+        </tr>
+        <tr *ngFor="let trade of smartTradesList">
+          <td></td>
+          <td>{{ trade.id }}</td>
+          <td>{{ trade.valueDate }}</td>
+          <td>{{ trade.counterParty }}</td>
+          <td>{{ trade.direction }}</td>
+          <td>{{ trade.currencyBuy }}</td>
+          <td>{{ trade.currencySell }}</td>
+          <td>{{ trade.amount }}</td>
+          <td>{{ trade.rate }}</td>
+          <td>{{ trade.contraAmount }}</td>
+          <td>{{ trade.valueDate }}</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
     </div>
+  </div>
+  <div class="row">
+    <div class="btn-container">
+      <!-- <button type="button" class="btn button-sm btn-success m-3">
+        Accept
+      </button>
+      <button type="button" class="btn button-sm btn-danger m-3">Reject</button> -->
+      <button type="button" class="btn button-sm btn-primary m-3">
+        Settle
+      </button>
+    </div>
+  </div>
 </div>

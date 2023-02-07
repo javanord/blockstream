@@ -6,7 +6,7 @@ import { Currency } from 'src/models/currency.model';
 @Component({
   selector: 'app-smart-trade',
   templateUrl: './smart-trade.component.html',
-  styleUrls: ['./smart-trade.component.css']
+  styleUrls: ['./smart-trade.component.css'],
 })
 export class SmartTradeComponent implements OnInit {
   usersList!: any[];
@@ -23,8 +23,8 @@ export class SmartTradeComponent implements OnInit {
       contraAmount: new FormControl(),
       valueDate: new FormControl(''),
       transactionId: new FormControl(''),
-      direction: new FormControl('')
-    })
+      direction: new FormControl(''),
+    });
   }
 
   ngOnInit(): void {
@@ -33,26 +33,27 @@ export class SmartTradeComponent implements OnInit {
     });
     this.customerService.getCurrencies().subscribe((currencies: any) => {
       this.currenciesList = currencies;
-    })
+    });
   }
 
   submitSmartTrade() {
     const formData = this.smartTradeForm.value;
     const userHash = localStorage.getItem('userHash');
-    this.customerService.submitSmartTrade({...formData, tradingParty: userHash}).subscribe(res => {
-      alert('Smart trade submitted successfully');
-      this.smartTradeForm.patchValue({
-      counterParty: null,
-      currencyBuy: 0,
-      currencySell: 0,
-      rate: '',
-      amount: 0,
-      contraAmount: 0,
-      valueDate: '',
-      transactionId: '',
-      direction: ''
-      })
-    });
+    this.customerService
+      .submitSmartTrade({ ...formData, tradingParty: userHash })
+      .subscribe((res) => {
+        alert('Smart trade submitted successfully');
+        this.smartTradeForm.patchValue({
+          counterParty: null,
+          currencyBuy: 0,
+          currencySell: 0,
+          rate: '',
+          amount: 0,
+          contraAmount: 0,
+          valueDate: '',
+          transactionId: '',
+          direction: '',
+        });
+      });
   }
-
 }

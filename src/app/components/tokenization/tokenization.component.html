@@ -1,32 +1,103 @@
-<div style="margin-top: 2rem; width: 80%;" class="container">
-    <h3 class="text-center">Tokenization</h3>
-    <div class="row" [formGroup]="tokenForm">
-        <div class="col-md-4">
-           
-                    <select class="form-select mt-3 bg-dark border-0" 
-                    formControlName="depositCurr">
-                        <option class="text-white">Select Currency</option>
-                        <option *ngFor="let curr of currenciesList" [value]="curr.currencyCode">{{ curr.currencyName }}</option>
-                      </select>
-                      <small class="text-danger" *ngIf="tokenForm.get('depositCurr')?.touched &&  tokenForm.get('depositCurr')?.errors">Currency is required.</small>
-                      
-                    <input type="text" class="form-control mt-3 bg-dark border-0"  placeholder="Enter amount" formControlName="depositAmount">
-                    <small class="text-danger" *ngIf="tokenForm.get('depositAmount')?.touched &&  tokenForm.get('depositAmount')?.errors">Amount is required.</small><br/>
-                    <button type="button" class="btn btn-primary mt-3" (click)="depositWithdraw('deposit')">Deposit</button>
-        </div>
-        <div class="col-md-4 offset-md-1">
-            <select class="form-select mt-3 bg-dark border-0" aria-label="Default select example" formControlName="withdrawCurr">
-                <option selected>Select Currency</option>
-                <option *ngFor="let curr of currenciesList" [value]="curr.currencyCode">{{ curr.currencyName }}</option> 
-              </select>
-              <small class="text-danger" *ngIf="tokenForm.get('withdrawCurr')?.touched &&  tokenForm.get('withdrawCurr')?.errors">Currency is required.</small>
-            <input type="text" class="form-control mt-3 bg-dark border-0" placeholder="Enter amount" formControlName="withdrawAmount">
-            <small class="text-danger" *ngIf="tokenForm.get('withdrawAmount')?.touched &&  tokenForm.get('withdrawAmount')?.errors">Amount is required.</small><br/>
-            <button type="button" class="btn btn-primary mt-3" (click)="depositWithdraw('withdraw')">Withdraw</button>
-        </div>
-        <div class="col-md-2 offset-md-1">
-            <app-side-menu></app-side-menu>
-        </div>
-    
+<div class="container top-container">
+  <div class="row row-heading">
+    <div class="col-md-9">
+      <h3>Tokenization</h3>
     </div>
+  </div>
+  <div class="row" [formGroup]="tokenForm">
+    <div class="col-md-4">
+      <div class="select-toggle">
+        <select
+          class="form-select mt-3 bg-dark border-0"
+          formControlName="depositCurr"
+        >
+          <option class="text-white">Select Currency</option>
+          <option
+            *ngFor="let curr of currenciesList"
+            [value]="curr.currencyCode"
+          >
+            {{ curr.currencyName }}
+          </option>
+        </select>
+      </div>
+
+      <small
+        class="text-danger"
+        *ngIf="
+          tokenForm.get('depositCurr')?.touched &&
+          tokenForm.get('depositCurr')?.errors
+        "
+        >Currency is required.</small
+      >
+
+      <input
+        type="text"
+        class="form-control mt-3 bg-dark border-0"
+        placeholder="Enter amount"
+        formControlName="depositAmount"
+      />
+      <small
+        class="text-danger"
+        *ngIf="
+          tokenForm.get('depositAmount')?.touched &&
+          tokenForm.get('depositAmount')?.errors
+        "
+        >Amount is required.</small
+      ><br />
+      <button
+        type="button"
+        class="btn button-sm btn-primary mt-3"
+        (click)="depositWithdraw('deposit')"
+      >
+        Deposit
+      </button>
+    </div>
+    <div class="col-md-4 offset-md-1">
+      <div class="select-toggle">
+        <select
+          class="form-select mt-3 bg-dark border-0"
+          aria-label="Default select example"
+          formControlName="withdrawCurr"
+        >
+          <option selected>Select Currency</option>
+          <option
+            *ngFor="let curr of currenciesList"
+            [value]="curr.currencyCode"
+          >
+            {{ curr.currencyName }}
+          </option>
+        </select>
+      </div>
+
+      <small
+        class="text-danger"
+        *ngIf="
+          tokenForm.get('withdrawCurr')?.touched &&
+          tokenForm.get('withdrawCurr')?.errors
+        "
+        >Currency is required.</small
+      >
+      <input
+        type="text"
+        class="form-control mt-3 bg-dark border-0"
+        placeholder="Enter amount"
+        formControlName="withdrawAmount"
+      />
+      <small
+        class="text-danger"
+        *ngIf="
+          tokenForm.get('withdrawAmount')?.touched &&
+          tokenForm.get('withdrawAmount')?.errors
+        "
+        >Amount is required.</small
+      ><br />
+      <button
+        type="button"
+        class="btn button-sm btn-primary mt-3"
+        (click)="depositWithdraw('withdraw')"
+      >
+        Withdraw
+      </button>
+    </div>
+  </div>
 </div>

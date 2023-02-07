@@ -1,15 +1,36 @@
 .margin-right-20 {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 * {
-    color: white;
+  color: white;
 }
-input::placeholder{
-    color: white;
-    font-style: italic;
+input::placeholder {
+  color: white;
+  font-style: italic;
 }
 
-td, th {
-    width: 200px;
+td,
+th {
+  width: 200px;
+}
+
+.top-container {
+  margin-top: 2rem;
+  width: 80%;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button-sm {
+  min-width: 100px;
+  border-radius: 4px;
+}
+
+.row-heading {
+  padding: 0 0 1.5rem;
 }

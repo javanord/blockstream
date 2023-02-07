@@ -7,18 +7,18 @@
   <div class="row">
     <div class="col-md-2 offset-md-10">
       <a
-        class="text-white text-decoration-none text-right log"
+        class="text-white text-decoration-none text-right log ps-0"
         (click)="logout()"
       >
         Logout</a
       >
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-9 menu-list">
+  <div class="row menu-list">
+    <div class="col-md-10 p-0">
       <div class="inline-block">
         <a
-          class="text-decoration-none align-middle"
+          class="text-decoration-none align-middle ps-0"
           routerLink="/customer/tokenization"
           routerLinkActive="active-link"
           >Tokenization</a
@@ -36,6 +36,9 @@
           >Trade Blotter</a
         >
       </div>
+    </div>
+    <div class="col-md-2">
+      <app-side-menu></app-side-menu>
     </div>
   </div>
 </div>

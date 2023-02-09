@@ -22,9 +22,10 @@
                 aria-label="Default select example"
                 formControlName="counterParty"
               >
+              <!---- Filter logged in user from drop down @TODO Subhash-->
                 <option
-                  *ngFor="let user of usersList"
-                  [value]="user?.createdBy"
+                  *ngFor="let user of usersList" 
+                  [value]="user?.login"
                 >
                   {{ user?.firstName }}
                 </option>
@@ -47,7 +48,7 @@
                   *ngFor="let curr of currenciesList"
                   [value]="curr.currencyCode"
                 >
-                  {{ curr.currencyName }}
+                  {{ curr.currencyCode }}
                 </option>
               </select>
             </div>
@@ -68,7 +69,7 @@
                   *ngFor="let curr of currenciesList"
                   [value]="curr.currencyCode"
                 >
-                  {{ curr.currencyName }}
+                  {{ curr.currencyCode }}
                 </option>
               </select>
             </div>

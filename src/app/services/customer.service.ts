@@ -26,7 +26,7 @@ export class CustomerService {
   }
 
   getUsers() {
-    return this.http.get(`${this.baseUrl}/admin/users?page=0&size=100`, {headers: {
+    return this.http.get(`${this.baseUrl}/customers/?page=0&size=100`, {headers: {
       'Authorization':
       'Bearer ' + localStorage.getItem('token')
     }})

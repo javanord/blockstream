@@ -34,7 +34,7 @@ export class LoginComponent {
       }
 
       this.authService.getUser(formVal.username).subscribe((res: any) => {
-        localStorage.setItem('userHash', res['createdBy']);
+        localStorage.setItem('userHash', res['login']);
       })
     })
 }

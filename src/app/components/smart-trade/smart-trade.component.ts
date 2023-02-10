@@ -12,6 +12,7 @@ export class SmartTradeComponent implements OnInit {
   usersList!: any[];
   currenciesList!: Currency[];
   smartTradeForm!: FormGroup;
+  directionList !: [{direction : 'BUY'}, {direction: 'SELL'}];
 
   constructor(private customerService: CustomerService) {
     this.smartTradeForm = new FormGroup({

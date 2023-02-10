@@ -10,15 +10,16 @@
       <table class="table border border-white">
         <tr class="border border-white">
           <th>Select</th>
-          <th>Trade Id</th>
-          <th>Trade Date</th>
+          <!--- <th>Trade Id</th> -->
           <th>Counter Party</th>
+          <th>Trading Party</th>
           <th>Buy/Sell</th>
-          <th>Currency Buy</th>
-          <th>Currency Sell</th>
+          <th>Traded Currency</th>
+          <th>Counter Currency</th>
           <th>Amount</th>
           <th>Rate</th>
           <th>Contra Amount</th>
+          <th>Trade Date</th>
           <th>Value Date</th>
           <th>Status</th>
           <th>Failure Reason</th>
@@ -28,16 +29,19 @@
         <!-- flip dirction if logged in user is == trading party-->
         <tr class="border border-white" *ngFor="let trade of smartTradesList">
           <td></td>
-          <td>{{ trade.id }}</td>
-          <td>{{ trade.valueDate }}</td>
+          <!-- <td>{{ trade.id }}</td> -->
           <td>{{ trade.counterParty }}</td>
+          <td>{{ trade.tradingParty }}</td>
           <td>{{ trade.direction }}</td>
           <td>{{ trade.currencyBuy }}</td>
           <td>{{ trade.currencySell }}</td>
           <td>{{ trade.amount }}</td>
           <td>{{ trade.rate }}</td>
           <td>{{ trade.contraAmount }}</td>
+          <td>{{ trade.tradeDate }}</td>
           <td>{{ trade.valueDate }}</td>
+          <td>{{ trade.status }}</td>
+          <td>{{ trade.failureReason }}</td>
           <td></td>
           <td></td>
         </tr>

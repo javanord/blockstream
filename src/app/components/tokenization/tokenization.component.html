@@ -11,7 +11,7 @@
           class="form-select mt-3 bg-dark border-0"
           formControlName="depositCurr"
         >
-          <option class="text-white">Select Currency</option>
+          <option class="text-white" selected disabled >Select Currency</option>
           <option
             *ngFor="let curr of currenciesList"
             [value]="curr.currencyCode"
@@ -59,7 +59,7 @@
           aria-label="Default select example"
           formControlName="withdrawCurr"
         >
-          <option selected>Select Currency</option>
+          <option selected disabled >Select Currency</option>
           <option
             *ngFor="let curr of currenciesList"
             [value]="curr.currencyCode"

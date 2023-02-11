@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomerService } from 'src/app/services/customer.service';
+import { WalletService } from 'src/app/services/wallet.service';
 import { Currency } from 'src/models/currency.model';
+import { Wallet } from 'src/models/wallet.model';
 
 @Component({
   selector: 'app-tokenization',
@@ -12,7 +14,7 @@ export class TokenizationComponent implements OnInit {
   public currenciesList: Currency[] = [{currencyName: 'INR', currencyCode: 'inr'}, {currencyName: 'GBP', currencyCode: 'gbp'}];
   public tokenForm!: FormGroup;
 
-  constructor(private customerService: CustomerService) {
+  constructor(private customerService: CustomerService, private walletService: WalletService) {
     this.tokenForm = new FormGroup({
       depositCurr: new FormControl(null),
       depositAmount: new FormControl(''),
@@ -28,6 +30,7 @@ export class TokenizationComponent implements OnInit {
   }
 
   depositWithdraw(action: string) {
+    console.log('##depositWithdraw', action);
     console.log(this.tokenForm.value)
     let payload;
     if(action == 'withdraw') {
@@ -42,7 +45,14 @@ export class TokenizationComponent implements OnInit {
       }
     }
     console.log(payload)
-    this.customerService.depositWithdraw(payload).subscribe((res) => {
+    this.customerService.depositWithdraw(payload).subscribe((res: any) => {
+      const { currencyCode, amount } = res;
+      console.log('##depositWithdrawSub', currencyCode, amount);
+      this.walletService.currencyAmount.next({
+        currencyCode,
+        amount,
+        transType: action === 'withdraw' ? 'withdraw' : 'deposit',
+      })
       console.log(res);
     })
   }

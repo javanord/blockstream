@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { WalletI } from '../models/wallet';
+import { CurrencyAmount } from 'src/models/currencyamount.model';
+import { Wallet } from 'src/models/wallet.model';
+import { WalletDetails } from 'src/models/walletdetails.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +14,16 @@ export class WalletService {
 
   constructor(private httpClient: HttpClient) { }
 
-  userWallet = new BehaviorSubject<WalletI>({
-    inr: '',
-    gbp: '',
-    usd: ''
+  userWallet = new BehaviorSubject<Wallet>({
+    inr: 0,
+    gbp: 0,
+    usd: 0
   })
+
+  currencyAmount = new BehaviorSubject<CurrencyAmount>({
+    currencyCode: '',
+    amount: 0,
+  });
 
   userId = new BehaviorSubject<string>('');
 

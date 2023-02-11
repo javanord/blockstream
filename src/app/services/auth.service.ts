@@ -29,6 +29,7 @@ export class AuthService {
   };
 
   public getUser(login: string) {
+    console.log('##getUser', login);
     //return this.http.get(`${this.baseUrl}/admin/users/${login}`, {headers: {
       return this.http.get(`${this.baseUrl}/customers/${login}`, {headers: {
       'Authorization':

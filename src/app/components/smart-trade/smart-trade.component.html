@@ -22,12 +22,11 @@
                 aria-label="Default select example"
                 formControlName="counterParty"
               >
-              <!---- Filter logged in user from drop down @TODO Subhash-->
-                <option
+            <option
                   *ngFor="let user of usersList" 
                   [value]="user?.login"
                 >
-                  {{ user?.firstName }}
+                  {{ user?.login }}
                 </option>
               </select>
             </div>

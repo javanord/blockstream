@@ -91,7 +91,7 @@ export class TokenizationComponent implements OnInit {
     
   }
 
-  depositWithdraw(action: string, selectedCustomerDetails: any) {
+  depositWithdraw(action: string, selectedCustomerDetails: any, loginId: string) {
     console.log('##depositWithdraw', action);
     console.log(this.tokenForm.value);
     console.log('##selectedCustomerDetails', selectedCustomerDetails);
@@ -105,12 +105,12 @@ export class TokenizationComponent implements OnInit {
       payload = {
         currencyCode: this.tokenForm.value['depositCurr'],
         amount: +this.tokenForm.value['depositAmount'],
-        ...selectedCustomerDetails
+        // ...selectedCustomerDetails
       }
       // payload = selectedCustomerDetails;
     }
     console.log(payload)
-    this.customerService.depositWithdraw(payload).subscribe((res: any) => {
+    this.customerService.depositWithdraw(payload, loginId).subscribe((res: any) => {
       // const { currencyCode, amount } = res;
       // console.log('##depositWithdrawSub', currencyCode, amount);
       // this.walletService.currencyAmount.next({

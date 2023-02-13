@@ -18,8 +18,8 @@ export class CustomerService {
     }});
   }
 
-  depositWithdraw(payload: any) {
-    return this.http.post(`${this.baseUrl}/wallets`, payload, {headers: {
+  depositWithdraw(payload: any, loginId: string) {
+    return this.http.post(`${this.baseUrl}/wallets/${loginId}`, payload, {headers: {
       'Authorization':
       'Bearer ' + localStorage.getItem('token')
     }})

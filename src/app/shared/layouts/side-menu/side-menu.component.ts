@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Wallet } from 'src/models/wallet.model';
 import { WalletDetails } from 'src/models/walletdetails.model';
@@ -15,6 +15,8 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   private userIdSub: Subscription;
   private userWalletSub: Subscription;
   private currencyAmountSub: Subscription;
+
+  @Input() isAdmin: boolean = false;
 
   constructor(private walletService: WalletService) { }
 
@@ -38,18 +40,15 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     });
 
     this.userIdSub = this.walletService.userId.subscribe(data => {
-      if (data) {
+      if (data && !this.isAdmin) {
         this.walletService.getUserWalletsDetails().subscribe((result: any) => {
-          console.log('#result', result);
-          // this.userWallet = updateWallet(result);
           this.walletService.userWallet.next(updateWallet(result));
-          console.log('#userWallet', this.userWallet);
-          const { currencyCode, amount } = result;
-          if (currencyCode) {
-            const lowerCaseCC = currencyCode.toLowerCase();
-            // findCurrency(this.userWallet, lowerCaseCC, amount);
-            // console.log('##userWallet', this.userWallet);
-          }
+          // const { currencyCode, amount } = result;
+          // if (currencyCode) {
+          //   const lowerCaseCC = currencyCode.toLowerCase();
+          //   findCurrency(this.userWallet, lowerCaseCC, amount);
+          //   console.log('##userWallet', this.userWallet);
+          // }
         })
       }
     })

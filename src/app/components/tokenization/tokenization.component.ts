@@ -4,7 +4,7 @@ import { ContractService } from 'src/app/services/contract.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Currency } from 'src/models/currency.model';
-import { getRandomInt } from 'src/utils/utils';
+import { getRandomInt, updateWallet } from 'src/utils/utils';
 
 @Component({
   selector: 'app-tokenization',
@@ -37,10 +37,6 @@ export class TokenizationComponent implements OnInit {
   async ngOnInit() {
     this.showWallet = false;
 
-    this.depositUserData = {
-      customer : {customerName : '' , customerLegalEntity : '', customerHashCode: '', id: '123@rew'}
-    };
-
     this.userForm.setValue({
       userList: 'Select User'
     });
@@ -56,7 +52,6 @@ export class TokenizationComponent implements OnInit {
       })
 
       this.customerService.getUsers().subscribe((users: any) => {
-        console.log('##users', users);
         this.usersList = users;
       })
 
@@ -65,19 +60,12 @@ export class TokenizationComponent implements OnInit {
         if (userList) {
           this.showWallet = true;
           this.walletService.getUserWalletDetails(userList).subscribe((walletData: any) => {
-            console.log('##walletData', walletData.length);
+            const updatedWallet = updateWallet(walletData);
+            this.walletService.userWallet.next(updatedWallet);
           })
 
           this.selectedUser = this.usersList.find((user: any) => user.login === userList);
-          console.log('##selectedUser', this.selectedUser);
-
-          this.depositUserData.customer.customerName = this.selectedUser.firstName;
-          this.depositUserData.customer.customerLegalEntity = this.selectedUser.login;
-          this.depositUserData.customer.customerHashCode = this.selectedUser.lastName;
-
-          console.log('##depositUserData', this.depositUserData);
         }
-        console.log('##values', values);
       })
   
       this.contractService.tradeManagerContractInstance.subscribe(async (tradeManagerContract) => {
@@ -91,10 +79,7 @@ export class TokenizationComponent implements OnInit {
     
   }
 
-  depositWithdraw(action: string, selectedCustomerDetails: any, loginId: string) {
-    console.log('##depositWithdraw', action);
-    console.log(this.tokenForm.value);
-    console.log('##selectedCustomerDetails', selectedCustomerDetails);
+  depositWithdraw(action: string, loginId: string) {
     let payload;
     if(action == 'withdraw') {
       payload = {
@@ -105,20 +90,12 @@ export class TokenizationComponent implements OnInit {
       payload = {
         currencyCode: this.tokenForm.value['depositCurr'],
         amount: +this.tokenForm.value['depositAmount'],
-        // ...selectedCustomerDetails
       }
-      // payload = selectedCustomerDetails;
     }
     console.log(payload)
-    this.customerService.depositWithdraw(payload, loginId).subscribe((res: any) => {
-      // const { currencyCode, amount } = res;
-      // console.log('##depositWithdrawSub', currencyCode, amount);
-      // this.walletService.currencyAmount.next({
-      //   currencyCode,
-      //   amount,
-      //   transType: action === 'withdraw' ? 'withdraw' : 'deposit',
-      // })
-      console.log(res);
+    this.customerService.depositWithdraw(payload, loginId).subscribe((walletData: any) => {
+      const updatedWallet = updateWallet(walletData);
+      this.walletService.userWallet.next(updatedWallet);
     })
   }
 }

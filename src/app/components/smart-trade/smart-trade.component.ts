@@ -47,8 +47,8 @@ export class SmartTradeComponent implements OnInit {
     const curtDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd'); 
     this.customerService
       .submitSmartTrade({ ...formData, tradingParty: userHash, tradeDate: curtDate, status: 'Submitted' })
-      .subscribe((res) => {
-        alert('Smart trade submitted successfully');
+      .subscribe((res : any) => {
+        alert('Smart trade submitted successfully, TradeId: '+  res.id);
         this.smartTradeForm.patchValue({
           counterParty: null,
           currencyBuy: 0,

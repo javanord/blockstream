@@ -17,7 +17,7 @@
             *ngFor="let user of usersList"
             [value]="user.login"
           >
-            {{ user.login + "(" + user.lastName + ")"}}
+            {{ user.login + " [" + user.lastName + "] "}}
           </option>
         </select>
       </div>
@@ -75,7 +75,7 @@
       <button
         type="button"
         class="btn button-sm btn-primary mt-3"
-        (click)="depositWithdraw('deposit')"
+        (click)="depositWithdraw('deposit', depositUserData)"
       >
         Deposit
       </button>

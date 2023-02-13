@@ -16,6 +16,8 @@ export class TokenizationComponent implements OnInit {
   public tokenForm!: FormGroup;
   public userForm: FormGroup;
   public usersList: any;
+  public selectedUser: any;
+  public depositUserData: any;
 
   public showWallet: boolean;
 
@@ -34,6 +36,10 @@ export class TokenizationComponent implements OnInit {
 
   async ngOnInit() {
     this.showWallet = false;
+
+    this.depositUserData = {
+      customer : {customerName : '' , customerLegalEntity : '', customerHashCode: '', id: '123@rew'}
+    };
 
     this.userForm.setValue({
       userList: 'Select User'
@@ -58,6 +64,18 @@ export class TokenizationComponent implements OnInit {
         const {userList} = values;
         if (userList) {
           this.showWallet = true;
+          this.walletService.getUserWalletDetails(userList).subscribe((walletData: any) => {
+            console.log('##walletData', walletData.length);
+          })
+
+          this.selectedUser = this.usersList.find((user: any) => user.login === userList);
+          console.log('##selectedUser', this.selectedUser);
+
+          this.depositUserData.customer.customerName = this.selectedUser.firstName;
+          this.depositUserData.customer.customerLegalEntity = this.selectedUser.login;
+          this.depositUserData.customer.customerHashCode = this.selectedUser.lastName;
+
+          console.log('##depositUserData', this.depositUserData);
         }
         console.log('##values', values);
       })
@@ -73,9 +91,10 @@ export class TokenizationComponent implements OnInit {
     
   }
 
-  depositWithdraw(action: string) {
+  depositWithdraw(action: string, selectedCustomerDetails: any) {
     console.log('##depositWithdraw', action);
-    console.log(this.tokenForm.value)
+    console.log(this.tokenForm.value);
+    console.log('##selectedCustomerDetails', selectedCustomerDetails);
     let payload;
     if(action == 'withdraw') {
       payload = {
@@ -85,18 +104,20 @@ export class TokenizationComponent implements OnInit {
     } else {
       payload = {
         currencyCode: this.tokenForm.value['depositCurr'],
-        amount: +this.tokenForm.value['depositAmount']
+        amount: +this.tokenForm.value['depositAmount'],
+        ...selectedCustomerDetails
       }
+      // payload = selectedCustomerDetails;
     }
     console.log(payload)
     this.customerService.depositWithdraw(payload).subscribe((res: any) => {
-      const { currencyCode, amount } = res;
-      console.log('##depositWithdrawSub', currencyCode, amount);
-      this.walletService.currencyAmount.next({
-        currencyCode,
-        amount,
-        transType: action === 'withdraw' ? 'withdraw' : 'deposit',
-      })
+      // const { currencyCode, amount } = res;
+      // console.log('##depositWithdrawSub', currencyCode, amount);
+      // this.walletService.currencyAmount.next({
+      //   currencyCode,
+      //   amount,
+      //   transType: action === 'withdraw' ? 'withdraw' : 'deposit',
+      // })
       console.log(res);
     })
   }

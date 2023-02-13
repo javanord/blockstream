@@ -25,8 +25,11 @@ export class WalletService {
 
   userId = new BehaviorSubject<string>('');
 
-  getUserWalletDetails(userId: string) {
-    return this.httpClient.get(`${this.baseUrl}/wallets/${userId}`);
+  getUserWalletDetails(loginId: string) {
+    return this.httpClient.get(`${this.baseUrl}/wallets/${loginId}`, {headers: {
+      'Authorization':
+      'Bearer ' + localStorage.getItem('token')
+    }});
   }
 
   getUserWalletsDetails() {

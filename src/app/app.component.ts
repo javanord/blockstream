@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
 
       this.contractService.tradeManagerContractInstance.next(this.contractInstance);
 
-      // const output = await this.contractInstance.registerAccount('RBS', 'rbs_lei');
+      // const output = await this.contractInstance.registerAccount('OSTTRA', 'osttra_lei');
       // console.log('##output', output.hash);
 
     } catch (err) {

@@ -138,9 +138,9 @@ export const TradeManagerv2Abi = [
     {
         "inputs": [
             {
-                "internalType": "bytes32",
-                "name": "_accHash",
-                "type": "bytes32"
+                "internalType": "address",
+                "name": "_acc",
+                "type": "address"
             }
         ],
         "name": "accExists",
@@ -176,19 +176,24 @@ export const TradeManagerv2Abi = [
     {
         "inputs": [
             {
-                "internalType": "bytes32",
+                "internalType": "address",
                 "name": "p1",
-                "type": "bytes32"
+                "type": "address"
             },
             {
-                "internalType": "bytes32",
+                "internalType": "address",
                 "name": "p2",
-                "type": "bytes32"
+                "type": "address"
             },
             {
-                "internalType": "string",
-                "name": "_quoteTerm",
-                "type": "string"
+                "internalType": "enum TradeManagerv2.Direction",
+                "name": "_direction",
+                "type": "uint8"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_rate",
+                "type": "uint256"
             },
             {
                 "internalType": "enum TradeManagerv2.CUR_TYPE",
@@ -202,11 +207,6 @@ export const TradeManagerv2Abi = [
             },
             {
                 "internalType": "uint256",
-                "name": "_rate",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
                 "name": "_notional",
                 "type": "uint256"
             },
@@ -214,6 +214,16 @@ export const TradeManagerv2Abi = [
                 "internalType": "uint256",
                 "name": "_contraNotional",
                 "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_tradeDate",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_valueDate",
+                "type": "string"
             }
         ],
         "name": "createTrade",
@@ -230,9 +240,9 @@ export const TradeManagerv2Abi = [
     {
         "inputs": [
             {
-                "internalType": "bytes32",
-                "name": "_userHash",
-                "type": "bytes32"
+                "internalType": "address",
+                "name": "_acc",
+                "type": "address"
             },
             {
                 "internalType": "enum TradeManagerv2.CUR_TYPE",
@@ -269,24 +279,14 @@ export const TradeManagerv2Abi = [
             {
                 "components": [
                     {
-                        "internalType": "bytes32",
+                        "internalType": "address",
                         "name": "initiatorCp",
-                        "type": "bytes32"
+                        "type": "address"
                     },
                     {
-                        "internalType": "bytes32",
+                        "internalType": "address",
                         "name": "receiverCp",
-                        "type": "bytes32"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "quoteTerm",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "rate",
-                        "type": "uint256"
+                        "type": "address"
                     },
                     {
                         "internalType": "uint256",
@@ -299,6 +299,16 @@ export const TradeManagerv2Abi = [
                         "type": "uint256"
                     },
                     {
+                        "internalType": "enum TradeManagerv2.Direction",
+                        "name": "direction",
+                        "type": "uint8"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "rate",
+                        "type": "uint256"
+                    },
+                    {
                         "internalType": "enum TradeManagerv2.CUR_TYPE",
                         "name": "buyCur",
                         "type": "uint8"
@@ -307,6 +317,16 @@ export const TradeManagerv2Abi = [
                         "internalType": "enum TradeManagerv2.CUR_TYPE",
                         "name": "sellCur",
                         "type": "uint8"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "tradeDate",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "valueDate",
+                        "type": "string"
                     },
                     {
                         "internalType": "enum TradeManagerv2.State",
@@ -330,9 +350,9 @@ export const TradeManagerv2Abi = [
     {
         "inputs": [
             {
-                "internalType": "bytes32",
-                "name": "_userHash",
-                "type": "bytes32"
+                "internalType": "address",
+                "name": "_acc",
+                "type": "address"
             },
             {
                 "internalType": "enum TradeManagerv2.CUR_TYPE",
@@ -367,9 +387,9 @@ export const TradeManagerv2Abi = [
     {
         "inputs": [
             {
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
+                "internalType": "address",
+                "name": "_newAcc",
+                "type": "address"
             },
             {
                 "internalType": "string",
@@ -380,9 +400,9 @@ export const TradeManagerv2Abi = [
         "name": "registerAccount",
         "outputs": [
             {
-                "internalType": "bytes32",
+                "internalType": "bool",
                 "name": "",
-                "type": "bytes32"
+                "type": "bool"
             }
         ],
         "stateMutability": "nonpayable",
@@ -417,9 +437,9 @@ export const TradeManagerv2Abi = [
     {
         "inputs": [
             {
-                "internalType": "bytes32",
-                "name": "_userHash",
-                "type": "bytes32"
+                "internalType": "address",
+                "name": "_acc",
+                "type": "address"
             },
             {
                 "internalType": "enum TradeManagerv2.CUR_TYPE",
@@ -443,4 +463,4 @@ export const TradeManagerv2Abi = [
         "stateMutability": "nonpayable",
         "type": "function"
     }
-]
+];

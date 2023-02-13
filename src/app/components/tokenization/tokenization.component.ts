@@ -5,6 +5,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Currency } from 'src/models/currency.model';
 import { getRandomInt, updateWallet } from 'src/utils/utils';
+import { ethers} from "ethers";
 
 @Component({
   selector: 'app-tokenization',
@@ -21,6 +22,8 @@ export class TokenizationComponent implements OnInit {
 
   public showWallet: boolean;
 
+  private contractInstance: any;
+
   constructor(private customerService: CustomerService, private walletService: WalletService, private contractService: ContractService) {
     this.tokenForm = new FormGroup({
       depositCurr: new FormControl(null),
@@ -36,6 +39,10 @@ export class TokenizationComponent implements OnInit {
 
   async ngOnInit() {
     this.showWallet = false;
+
+    this.contractService.tradeManagerContractInstance.subscribe(contractInstance => {
+      this.contractInstance = contractInstance;
+    })
 
     this.userForm.setValue({
       userList: 'Select User'
@@ -67,19 +74,13 @@ export class TokenizationComponent implements OnInit {
           this.selectedUser = this.usersList.find((user: any) => user.login === userList);
         }
       })
-  
-      this.contractService.tradeManagerContractInstance.subscribe(async (tradeManagerContract) => {
-        const randomInt = getRandomInt(1, 100);
-        // const output = await tradeManagerContract.registerAccount(`RBS_${randomInt}`, 'rbs_lei');
-        // console.log('##output', output.hash);
-      });
     } catch(err) {
 
     }
     
   }
 
-  depositWithdraw(action: string, loginId: string) {
+  async depositWithdraw(action: string, loginId: string) {
     let payload;
     if(action == 'withdraw') {
       payload = {
@@ -92,10 +93,23 @@ export class TokenizationComponent implements OnInit {
         amount: +this.tokenForm.value['depositAmount'],
       }
     }
-    console.log(payload)
-    this.customerService.depositWithdraw(payload, loginId).subscribe((walletData: any) => {
-      const updatedWallet = updateWallet(walletData);
-      this.walletService.userWallet.next(updatedWallet);
-    })
+    console.log(payload);
+    const formData = this.tokenForm.value;
+    const p1Address = this.selectedUser.lastName;
+    const decimals = 18;
+    try {
+      const amount = ethers.utils.parseUnits(formData.depositAmount, decimals);
+      const currency = formData.depositCurr === 'INR' ? 0 : 1;
+      const checkDeposit: boolean =  await this.contractInstance.depositeAmount(p1Address, currency, amount);
+      if (checkDeposit) {
+        this.customerService.depositWithdraw(payload, loginId).subscribe((walletData: any) => {
+          const updatedWallet = updateWallet(walletData);
+          this.walletService.userWallet.next(updatedWallet);
+    
+        })
+      }
+    } catch(err) {
+      console.log('##error', err);
+    }
   }
 }

@@ -148,12 +148,14 @@
             aria-label="Default select example"
             formControlName="direction"
           >
-            <option
+            <option value="buy">BUY</option>
+            <option value="sell">SELL</option>
+            <!-- <option
               *ngFor="let dir of directionList" 
               [value]="dir.direction"
             >
               {{ dir.direction }}
-            </option>
+            </option> -->
           </select>
           </div>
           <td>

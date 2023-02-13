@@ -1,19 +1,22 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.8;
+pragma solidity >=0.8.8;
 
 contract TradeManagerv2 {
 
     enum State {Alleged, Affirmed,Rejected, Setteled}
+    enum Direction {BUY, SELL}
 
     struct Trade {
-        bytes32 initiatorCp;
-        bytes32 receiverCp;
-        string quoteTerm;
-        uint rate;
+        address initiatorCp;
+        address receiverCp;
         uint notional;
         uint contraNotional;
+        Direction direction;
+        uint rate;
         CUR_TYPE buyCur;
         CUR_TYPE sellCur;
+        string tradeDate;
+        string valueDate;
         State state;
         bool isExist;
     }
@@ -25,14 +28,14 @@ contract TradeManagerv2 {
     enum CUR_TYPE {INRDC, GBPDC}
     
     struct ACCOUNT {
-        string name;
         string lei;
         mapping(CUR_TYPE => uint) curr;
         bool isExist;
     }
+    //address RBS = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
+    //address Barclay = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2;
 
-    mapping(bytes32 => ACCOUNT) ACC_MAP;
-
+    mapping(address => ACCOUNT) ACC_MAP;
 
     //----------- Events-----------
     event NewTradeCreated(address _address, bytes32 _tradeId, State tradeStatus);
@@ -46,14 +49,13 @@ contract TradeManagerv2 {
     }
 
     function _generateTradeHash(Trade  memory _trade) internal pure returns (bytes32) {
-        return keccak256(abi.encodePacked(_trade.initiatorCp, _trade.receiverCp, _trade.quoteTerm,_trade.rate, _trade.notional, _trade.contraNotional));
+        return keccak256(abi.encodePacked(_trade.initiatorCp, _trade.receiverCp, _trade.notional, _trade.contraNotional));
     }
 
     function settleTrade(bytes32 _tdHash) public {
     
         require (_tradesMapping[_tdHash].isExist, "Trade doesn't exist");
         require (_tradesMapping[_tdHash].state != State.Setteled, "Trade already settled");
-        uint amount = _tradesMapping[_tdHash].notional;
         _transfer( 
             _tradesMapping[_tdHash].initiatorCp,
             _tradesMapping[_tdHash].receiverCp,
@@ -65,7 +67,7 @@ contract TradeManagerv2 {
         emit TradeSettled(msg.sender, _tdHash, State.Setteled);
     }
 
-    function _transfer(bytes32 p1, bytes32 p2,
+    function _transfer(address p1, address p2,
                         CUR_TYPE buyCur, CUR_TYPE sellCur,
                         uint buyAmt, uint sellAmt) internal returns (bool){
 
@@ -83,29 +85,32 @@ contract TradeManagerv2 {
        return true;
     }
 
-    function _deductWalletMoney(bytes32 p, CUR_TYPE _curr, uint _amnt ) internal returns (bool) {
+    function _deductWalletMoney(address p, CUR_TYPE _curr, uint _amnt ) internal returns (bool) {
         ACC_MAP[p].curr[_curr] -= _amnt;
         return true;
     }
 
-    function _addWalletMoney(bytes32 p, CUR_TYPE _curr, uint _amnt ) internal returns (bool) {
+    function _addWalletMoney(address p, CUR_TYPE _curr, uint _amnt ) internal returns (bool) {
         ACC_MAP[p].curr[_curr] += _amnt;
         return true;
     }
 
-    function  createTrade(bytes32 p1, bytes32 p2, string memory _quoteTerm, 
-                    CUR_TYPE _buyCur, CUR_TYPE _sellCur, uint _rate, uint256 _notional,
-                     uint256 _contraNotional) public returns(bytes32) {
-         require (owner != msg.sender);
+
+    function  createTrade(address p1, address p2, Direction _direction, 
+                    uint _rate, CUR_TYPE _buyCur, CUR_TYPE _sellCur, uint256 _notional,
+                     uint256 _contraNotional, string memory _tradeDate, string memory _valueDate) public returns(bytes32) {
+         
          Trade memory newTrade = Trade({
             initiatorCp: p1,
             receiverCp: p2,
-            quoteTerm: _quoteTerm,
             buyCur: _buyCur,
             sellCur: _sellCur,
+            direction: _direction,
             rate: _rate,
             notional: _notional,
             contraNotional: _contraNotional,
+            tradeDate: _tradeDate,
+            valueDate: _valueDate,
             state: State.Affirmed,
             isExist: false
         });
@@ -157,46 +162,66 @@ contract TradeManagerv2 {
 
 
     //----------------ACCOUNT Manager-----------------------------
-    function registerAccount(string memory _name, string memory _lei) external returns (bytes32) {
 
-        require( bytes(_name).length > 0, "Account not valid");
+    function accExists(address _acc) external view returns(bool) {
+        return ACC_MAP[_acc].isExist;
+    }
+
+    function depositeAmount(address _acc, CUR_TYPE _curr, uint _amt) external returns (bool) {
+        require( _amt > 0, "Amount not valid");
+        require(ACC_MAP[_acc].isExist, "Account not registered");
+        ACC_MAP[_acc].curr[_curr] += _amt;
+        return true;
+    }
+
+    function withdrawAmount(address _acc, CUR_TYPE _curr, uint _amt) external returns (bool) {
+        require( _amt > 0, "Amount not valid");
+        require(ACC_MAP[_acc].isExist, "Account not registered");
+        ACC_MAP[_acc].curr[_curr] -= _amt;
+        return true;
+    }
+
+    function getUserCurrencyAmount(address _acc, CUR_TYPE _curr) external view returns(uint) {
+        require(ACC_MAP[_acc].isExist, "Account not registered");
+        return ACC_MAP[_acc].curr[_curr];
+    }
+
+    /*function resetAcc() external returns (bool) {
+        ACC_MAP[RBS].curr[CUR_TYPE.INRDC] = 0;
+        ACC_MAP[RBS].curr[CUR_TYPE.GBPDC] = 0;
+        ACC_MAP[Barclay].curr[CUR_TYPE.INRDC] = 0;
+        ACC_MAP[Barclay].curr[CUR_TYPE.GBPDC] = 0;
+        return true;
+    }*/
+
+    function registerAccount(address _newAcc, string memory _lei) external returns (bool) {
+
         require( bytes(_lei).length  > 0, "LEI not valid");
-
-        bytes32 accHash = keccak256(abi.encodePacked(_name, _lei));
+        //bytes32 accHash = keccak256(abi.encodePacked(_name, _lei));
 
         // TODO - retry for new hash
-        require(!ACC_MAP[accHash].isExist, "Account already registered");
-        //require(userExistMap[hash] == false , "User already registered");
-        
-        ACC_MAP[accHash].isExist = true;
-        ACC_MAP[accHash].name = _name;
-        ACC_MAP[accHash].lei = _lei;
-        ACC_MAP[accHash].curr[CUR_TYPE.INRDC] = 0;
-        ACC_MAP[accHash].curr[CUR_TYPE.GBPDC] = 0;
+        require(!ACC_MAP[_newAcc].isExist, "Account already registered");
 
-        return accHash;
-    }
+        ACC_MAP[_newAcc].isExist = true;
+        ACC_MAP[_newAcc].lei = _lei;
+        ACC_MAP[_newAcc].curr[CUR_TYPE.INRDC] = 0;
+        ACC_MAP[_newAcc].curr[CUR_TYPE.GBPDC] = 0;
 
-    function accExists(bytes32 _accHash) external view returns(bool) {
-        return ACC_MAP[_accHash].isExist;
-    }
+        /*ACC_MAP[RBS].isExist = true;
+        ACC_MAP[RBS].lei = "RBSLei";
+        ACC_MAP[RBS].curr[CUR_TYPE.INRDC] = 0;
+        ACC_MAP[RBS].curr[CUR_TYPE.GBPDC] = 0;
 
-    function depositeAmount(bytes32 _userHash, CUR_TYPE _curr, uint _amt) external returns (bool) {
-        require( _amt > 0, "Amount not valid");
-        require(ACC_MAP[_userHash].isExist, "Account not registered");
-        ACC_MAP[_userHash].curr[_curr] += _amt;
+        ACC_MAP[Barclay].isExist = true;
+        ACC_MAP[Barclay].lei = "BarclayLei";
+        ACC_MAP[Barclay].curr[CUR_TYPE.INRDC] = 0;
+        ACC_MAP[Barclay].curr[CUR_TYPE.GBPDC] = 0;
+
+        ACC_MAP[RBS].curr[CUR_TYPE.INRDC] += 10000;
+        ACC_MAP[RBS].curr[CUR_TYPE.GBPDC] += 2000;
+        ACC_MAP[Barclay].curr[CUR_TYPE.INRDC] += 5000;
+        ACC_MAP[Barclay].curr[CUR_TYPE.GBPDC] += 3000;*/
         return true;
     }
 
-    function withdrawAmount(bytes32 _userHash, CUR_TYPE _curr, uint _amt) external returns (bool) {
-        require( _amt > 0, "Amount not valid");
-        require(ACC_MAP[_userHash].isExist, "Account not registered");
-        ACC_MAP[_userHash].curr[_curr] -= _amt;
-        return true;
-    }
-
-    function getUserCurrencyAmount(bytes32 _userHash, CUR_TYPE _curr) external view returns(uint) {
-        require(ACC_MAP[_userHash].isExist, "User not registered");
-        return ACC_MAP[_userHash].curr[_curr];
-    }
 }

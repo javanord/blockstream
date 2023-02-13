@@ -1,0 +1,27 @@
+.active-link {
+    color: white;
+}
+
+.log:hover {
+    color: aqua;
+}
+
+a {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    color: rgb(236, 86, 169);
+}
+
+.menu-list {
+    margin: 2rem 0;
+    padding-left: 0;
+}
+
+.top-container {
+    max-width: 80%;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

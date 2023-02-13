@@ -13,6 +13,7 @@ import { TradeBlotterComponent } from './components/trade-blotter/trade-blotter.
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AdmindashboardComponent } from './components/admindashboard/admindashboard.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
     RegistrationComponent,
     SmartTradeComponent,
     TradeBlotterComponent,
+    AdmindashboardComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,17 +1,45 @@
 <div class="container top-container">
   <div class="row row-heading">
     <div class="col-md-9">
+      <h3>Users</h3>
+    </div>
+  </div>
+
+  <div class="row" [formGroup]="userForm">
+    <div class="col-md-8">
+      <div class="select-toggle">
+        <select
+          class="form-select mt-3 bg-dark border-0"
+          formControlName="userList"
+        >
+          <option class="text-white" disabled>Select User</option>
+          <option
+            *ngFor="let user of usersList"
+            [value]="user.login"
+          >
+            {{ user.login + "(" + user.lastName + ")"}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="showWallet">Wallet</p>
+
+  <div class="row row-heading top-margin">
+    <div class="col-md-9">
       <h3>Tokenization</h3>
     </div>
   </div>
+
   <div class="row" [formGroup]="tokenForm">
-    <div class="col-md-4">
+    <div class="col-md-8">
       <div class="select-toggle">
         <select
           class="form-select mt-3 bg-dark border-0"
           formControlName="depositCurr"
         >
-          <option class="text-white" selected disabled >Select Currency</option>
+          <option class="text-white" disabled >Select Currency</option>
           <option
             *ngFor="let curr of currenciesList"
             [value]="curr.currencyCode"
@@ -52,7 +80,7 @@
         Deposit
       </button>
     </div>
-    <div class="col-md-4 offset-md-1">
+    <!-- <div class="col-md-4 offset-md-1">
       <div class="select-toggle">
         <select
           class="form-select mt-3 bg-dark border-0"
@@ -98,6 +126,6 @@
       >
         Withdraw
       </button>
-    </div>
+    </div> -->
   </div>
 </div>

@@ -43,10 +43,10 @@ export class SmartTradeComponent implements OnInit {
 
   submitSmartTrade() {
     const formData = this.smartTradeForm.value;
-    const userHash = localStorage.getItem('userHash');
+    const loggedInUser = localStorage.getItem('loggedInUser');
     const curtDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd'); 
     this.customerService
-      .submitSmartTrade({ ...formData, tradingParty: userHash, tradeDate: curtDate, status: 'Submitted' })
+      .submitSmartTrade({ ...formData, tradingParty: loggedInUser, tradeDate: curtDate, status: 'Submitted' })
       .subscribe((res : any) => {
         alert('Smart trade submitted successfully, TradeId: '+  res.id);
         this.smartTradeForm.patchValue({

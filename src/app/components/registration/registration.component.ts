@@ -16,7 +16,8 @@ export class RegistrationComponent {
     this.customerForm = new FormGroup({
       firstName: new FormControl('', Validators.required),
       email: new FormControl('', Validators.required),
-      login: new FormControl('', Validators.required)
+      login: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required)
     })
   }
 
@@ -28,7 +29,8 @@ export class RegistrationComponent {
         this.customerForm.patchValue({
           firstName: '',
           email: '',
-          login: ''
+          login: '',
+          lastName: '',
         })
       }
     });

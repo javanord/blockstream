@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Wallet } from 'src/models/wallet.model';
 import { WalletDetails } from 'src/models/walletdetails.model';
 import { WalletService } from 'src/app/services/wallet.service';
-import { findCurrency } from 'src/utils/utils';
+import { updateWallet, findCurrency } from 'src/utils/utils';
 
 @Component({
   selector: 'app-side-menu',
@@ -22,11 +22,10 @@ export class SideMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userWalletSub = this.walletService.userWallet.subscribe(walletData => {
-      const {inr, gbp, usd} = walletData;
+      const {inr, gbp} = walletData;
       this.userWallet = {
         inr,
-        gbp,
-        usd
+        gbp
       };
     })
 
@@ -42,6 +41,9 @@ export class SideMenuComponent implements OnInit, OnDestroy {
       if (data) {
         this.walletService.getUserWalletsDetails().subscribe((result: any) => {
           console.log('#result', result);
+          // this.userWallet = updateWallet(result);
+          this.walletService.userWallet.next(updateWallet(result));
+          console.log('#userWallet', this.userWallet);
           const { currencyCode, amount } = result;
           if (currencyCode) {
             const lowerCaseCC = currencyCode.toLowerCase();

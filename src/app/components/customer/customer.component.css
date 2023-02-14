@@ -21,3 +21,7 @@ a {
 .cursor-pointer {
   cursor: pointer;
 }
+.login-user {
+  color: #fff;
+  font-weight: bold;
+}

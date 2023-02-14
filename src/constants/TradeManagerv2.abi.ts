@@ -186,14 +186,14 @@ export const TradeManagerv2Abi = [
                 "type": "address"
             },
             {
-                "internalType": "enum TradeManagerv2.Direction",
+                "internalType": "string",
                 "name": "_direction",
-                "type": "uint8"
+                "type": "string"
             },
             {
-                "internalType": "uint256",
+                "internalType": "string",
                 "name": "_rate",
-                "type": "uint256"
+                "type": "string"
             },
             {
                 "internalType": "enum TradeManagerv2.CUR_TYPE",
@@ -299,14 +299,14 @@ export const TradeManagerv2Abi = [
                         "type": "uint256"
                     },
                     {
-                        "internalType": "enum TradeManagerv2.Direction",
+                        "internalType": "string",
                         "name": "direction",
-                        "type": "uint8"
+                        "type": "string"
                     },
                     {
-                        "internalType": "uint256",
+                        "internalType": "string",
                         "name": "rate",
-                        "type": "uint256"
+                        "type": "string"
                     },
                     {
                         "internalType": "enum TradeManagerv2.CUR_TYPE",

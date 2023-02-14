@@ -101,6 +101,7 @@ export class TokenizationComponent implements OnInit {
       const amount = ethers.utils.parseUnits(formData.depositAmount, decimals);
       const currency = formData.depositCurr === 'INR' ? 0 : 1;
       const checkDeposit: boolean =  await this.contractInstance.depositeAmount(p1Address, currency, amount);
+      console.log('##checkDeposit', checkDeposit);
       if (checkDeposit) {
         this.customerService.depositWithdraw(payload, loginId).subscribe((walletData: any) => {
           const updatedWallet = updateWallet(walletData);

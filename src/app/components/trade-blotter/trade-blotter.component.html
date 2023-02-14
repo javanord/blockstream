@@ -26,7 +26,9 @@
         </tr>
 
         <tr class="border border-white" *ngFor="let trade of smartTradesList">
-          <td></td>
+          <td>
+            <input class="mx-3" [checked]="trade.checked" [disabled]="trade.tradingParty !== loggedInUser" (click)="toggleCheckbox(trade.id)" type="checkbox" [id]="trade.id" [name]="trade.tradingParty" />
+          </td>
           <!-- <td>{{ trade.id }}</td> -->
           <td>{{ trade.counterParty }}</td>
           <td>{{ trade.tradingParty }}</td>
@@ -52,7 +54,7 @@
         Accept
       </button>
       <button type="button" class="btn button-sm btn-danger m-3">Reject</button> -->
-      <button type="button" class="btn button-sm btn-primary m-3">
+      <button (click)="settleTrade()" type="button" class="btn button-sm btn-primary m-3">
         Settle
       </button>
     </div>

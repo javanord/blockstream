@@ -35,7 +35,7 @@ export class RegistrationComponent implements OnInit {
     console.log('##registerFormData', formData);
     const accountId = formData.lastName;
     const output = await this.contractInstance.registerAccount(accountId, 'lei');
-    console.log('##output', output.hash);
+    console.log('##output', output);
     this.authService.createUser(formData).subscribe((res: any) => {
       if(res?.login) {
         alert(res?.firstName + ' created successfully');

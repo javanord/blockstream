@@ -6,18 +6,21 @@ import { TokenizationComponent } from './components/tokenization/tokenization.co
 import { RegistrationComponent } from './components/registration/registration.component';
 import { SmartTradeComponent } from './components/smart-trade/smart-trade.component';
 import { TradeBlotterComponent } from './components/trade-blotter/trade-blotter.component';
+import { AdmindashboardComponent } from './components/admindashboard/admindashboard.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'/login',pathMatch:'full'},
   {path:'login', component:LoginComponent},
   {path:'customer', component: CustomerComponent ,children: [
+    {path: '', redirectTo: 'smart-trade', pathMatch: 'full'},
+    {path: 'smart-trade', component: SmartTradeComponent},
+    {path:'trade-blotter',component: TradeBlotterComponent}
+  ]},
+  {path:'admin', component: AdmindashboardComponent ,children: [
     {path: '', redirectTo: 'tokenization', pathMatch: 'full'},
     {path: 'tokenization', component: TokenizationComponent},
-    {path: 'smart-trade', component: SmartTradeComponent},
-    {path:'trade-blotter',component:TradeBlotterComponent}
-  ]},
-  {path:'register',component:RegistrationComponent}
-
+    {path:'register',component: RegistrationComponent}
+  ]}
 ];
 
 @NgModule({

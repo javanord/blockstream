@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CurrencyAmount } from 'src/models/currencyamount.model';
 import { Wallet } from 'src/models/wallet.model';
-import { WalletDetails } from 'src/models/walletdetails.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,7 @@ export class WalletService {
 
   userWallet = new BehaviorSubject<Wallet>({
     inr: 0,
-    gbp: 0,
-    usd: 0
+    gbp: 0
   })
 
   currencyAmount = new BehaviorSubject<CurrencyAmount>({
@@ -27,8 +25,11 @@ export class WalletService {
 
   userId = new BehaviorSubject<string>('');
 
-  getUserWalletDetails(userId: string) {
-    return this.httpClient.get(`${this.baseUrl}/wallets/${userId}`);
+  getUserWalletDetails(loginId: string) {
+    return this.httpClient.get(`${this.baseUrl}/wallets/${loginId}`, {headers: {
+      'Authorization':
+      'Bearer ' + localStorage.getItem('token')
+    }});
   }
 
   getUserWalletsDetails() {

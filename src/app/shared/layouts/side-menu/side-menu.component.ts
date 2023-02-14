@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Wallet } from 'src/models/wallet.model';
 import { WalletDetails } from 'src/models/walletdetails.model';
 import { WalletService } from 'src/app/services/wallet.service';
-import { findCurrency } from 'src/utils/utils';
+import { updateWallet, findCurrency } from 'src/utils/utils';
 
 @Component({
   selector: 'app-side-menu',
@@ -16,17 +16,18 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   private userWalletSub: Subscription;
   private currencyAmountSub: Subscription;
 
+  @Input() isAdmin: boolean = false;
+
   constructor(private walletService: WalletService) { }
 
   userWallet: Wallet;
 
   ngOnInit(): void {
     this.userWalletSub = this.walletService.userWallet.subscribe(walletData => {
-      const {inr, gbp, usd} = walletData;
+      const {inr, gbp} = walletData;
       this.userWallet = {
         inr,
-        gbp,
-        usd
+        gbp
       };
     })
 
@@ -39,15 +40,15 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     });
 
     this.userIdSub = this.walletService.userId.subscribe(data => {
-      if (data) {
+      if (data && !this.isAdmin) {
         this.walletService.getUserWalletsDetails().subscribe((result: any) => {
-          console.log('#result', result);
-          const { currencyCode, amount } = result;
-          if (currencyCode) {
-            const lowerCaseCC = currencyCode.toLowerCase();
-            // findCurrency(this.userWallet, lowerCaseCC, amount);
-            // console.log('##userWallet', this.userWallet);
-          }
+          this.walletService.userWallet.next(updateWallet(result));
+          // const { currencyCode, amount } = result;
+          // if (currencyCode) {
+          //   const lowerCaseCC = currencyCode.toLowerCase();
+          //   findCurrency(this.userWallet, lowerCaseCC, amount);
+          //   console.log('##userWallet', this.userWallet);
+          // }
         })
       }
     })

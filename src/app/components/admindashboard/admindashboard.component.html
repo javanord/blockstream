@@ -1,0 +1,41 @@
+<div class="container top-container">
+    <!-- <div class="row">
+      <div class="col-md-2 offset-md-10">
+        <a
+          class="text-white text-decoration-none text-right log ps-0 cursor-pointer"
+          (click)="logout()"
+        >
+          Logout</a
+        >
+      </div>
+    </div> -->
+    <div class="row menu-list">
+      <div class="col-md-10 p-0">
+        <div class="inline-block">
+          <a
+            class="text-decoration-none align-middle ps-0"
+            routerLink="/admin/tokenization"
+            routerLinkActive="active-link"
+            >Tokenization</a
+          >
+          <a
+            class="text-decoration-none align-middle"
+            routerLinkActive="active-link"
+            routerLink="/admin/register"
+            >Register</a
+          >
+        </div>
+      </div>
+      <div class="col-md-2">
+        <a
+          class="text-white text-decoration-none text-right log ps-0 cursor-pointer"
+          (click)="logout()"
+        >
+          Logout</a
+        >
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+
+

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ContractService } from 'src/app/services/contract.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Currency } from 'src/models/currency.model';
-import { Wallet } from 'src/models/wallet.model';
+import { getRandomInt, updateWallet } from 'src/utils/utils';
+import { ethers} from "ethers";
 
 @Component({
   selector: 'app-tokenization',
@@ -13,25 +15,72 @@ import { Wallet } from 'src/models/wallet.model';
 export class TokenizationComponent implements OnInit {
   public currenciesList: Currency[] = [{currencyName: 'INR', currencyCode: 'inr'}, {currencyName: 'GBP', currencyCode: 'gbp'}];
   public tokenForm!: FormGroup;
+  public userForm: FormGroup;
+  public usersList: any;
+  public selectedUser: any;
+  public depositUserData: any;
 
-  constructor(private customerService: CustomerService, private walletService: WalletService) {
+  public showWallet: boolean;
+
+  private contractInstance: any;
+
+  constructor(private customerService: CustomerService, private walletService: WalletService, private contractService: ContractService) {
     this.tokenForm = new FormGroup({
       depositCurr: new FormControl(null),
       depositAmount: new FormControl(''),
-      withdrawCurr: new FormControl(null),
-      withdrawAmount: new FormControl('')
+      // withdrawCurr: new FormControl(null),
+      // withdrawAmount: new FormControl('')
+    })
+
+    this.userForm = new FormGroup({
+      userList: new FormControl(null),
     })
   }
 
-  ngOnInit(): void {
-    this.customerService.getCurrencies().subscribe((currencies: any) => {
-      this.currenciesList = currencies;
+  async ngOnInit() {
+    this.showWallet = false;
+
+    this.contractService.tradeManagerContractInstance.subscribe(contractInstance => {
+      this.contractInstance = contractInstance;
     })
+
+    this.userForm.setValue({
+      userList: 'Select User'
+    });
+
+    this.tokenForm.setValue({
+      depositCurr: 'Select Currency',
+      depositAmount: ''
+    });
+
+    try {
+      this.customerService.getCurrencies().subscribe((currencies: any) => {
+        this.currenciesList = currencies;
+      })
+
+      this.customerService.getUsers().subscribe((users: any) => {
+        this.usersList = users;
+      })
+
+      this.userForm.valueChanges.subscribe(values => {
+        const {userList} = values;
+        if (userList) {
+          this.showWallet = true;
+          this.walletService.getUserWalletDetails(userList).subscribe((walletData: any) => {
+            const updatedWallet = updateWallet(walletData);
+            this.walletService.userWallet.next(updatedWallet);
+          })
+
+          this.selectedUser = this.usersList.find((user: any) => user.login === userList);
+        }
+      })
+    } catch(err) {
+
+    }
+    
   }
 
-  depositWithdraw(action: string) {
-    console.log('##depositWithdraw', action);
-    console.log(this.tokenForm.value)
+  async depositWithdraw(action: string, loginId: string) {
     let payload;
     if(action == 'withdraw') {
       payload = {
@@ -41,19 +90,26 @@ export class TokenizationComponent implements OnInit {
     } else {
       payload = {
         currencyCode: this.tokenForm.value['depositCurr'],
-        amount: +this.tokenForm.value['depositAmount']
+        amount: +this.tokenForm.value['depositAmount'],
       }
     }
-    console.log(payload)
-    this.customerService.depositWithdraw(payload).subscribe((res: any) => {
-      const { currencyCode, amount } = res;
-      console.log('##depositWithdrawSub', currencyCode, amount);
-      this.walletService.currencyAmount.next({
-        currencyCode,
-        amount,
-        transType: action === 'withdraw' ? 'withdraw' : 'deposit',
-      })
-      console.log(res);
-    })
+    console.log(payload);
+    const formData = this.tokenForm.value;
+    const p1Address = this.selectedUser.lastName;
+    const decimals = 18;
+    try {
+      const amount = ethers.utils.parseUnits(formData.depositAmount, decimals);
+      const currency = formData.depositCurr === 'INR' ? 0 : 1;
+      const checkDeposit: boolean =  await this.contractInstance.depositeAmount(p1Address, currency, amount);
+      if (checkDeposit) {
+        this.customerService.depositWithdraw(payload, loginId).subscribe((walletData: any) => {
+          const updatedWallet = updateWallet(walletData);
+          this.walletService.userWallet.next(updatedWallet);
+    
+        })
+      }
+    } catch(err) {
+      console.log('##error', err);
+    }
   }
 }

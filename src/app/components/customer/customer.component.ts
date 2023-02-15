@@ -15,7 +15,10 @@ export class CustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loggedInUserName = localStorage.getItem('loggedInUser') as string;
+    setTimeout(() => {
+      this.loggedInUserName = localStorage.getItem('loggedInUser') as string;
+    }, 500)
+    
   }
 
   logout(){

@@ -26,10 +26,8 @@ export class AppComponent implements OnInit {
       this.wind = window;
 
       const provider = new ethers.providers.Web3Provider(this.wind.ethereum, "any");
-      console.log(provider);
       await provider.send("eth_requestAccounts", []);
       provider.on("network", (newNetwork: any, oldNetwork: any) => {
-        console.log('network changed');
         if (oldNetwork) {
           window.location.reload();
         }
@@ -38,17 +36,11 @@ export class AppComponent implements OnInit {
       this.signer = provider.getSigner();
       this.signerAddress = await this.signer.getAddress();
       this.balance = await provider.getBalance(this.signerAddress);
-      console.log(this.signerAddress);
-      console.log(this.balance.toString());
 
       this.contractInstance = new ethers.Contract(TRADE_MANAGER_V2_ADDRESS, TradeManagerv2Abi, this.signer);
-      console.log('##CI', this.contractInstance);
       this.contractInstance.connect(this.signer);
 
       this.contractService.tradeManagerContractInstance.next(this.contractInstance);
-
-      // const output = await this.contractInstance.registerAccount('OSTTRA', 'osttra_lei');
-      // console.log('##output', output.hash);
 
     } catch (err) {
       console.log('Error', err);

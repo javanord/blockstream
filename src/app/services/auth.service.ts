@@ -21,19 +21,24 @@ export class AuthService {
   }
 
   public createUser(user: any) {
-    return this.http.post(`${this.baseUrl}/admin/users`, {...user, authorities: 
-      ["ROLE_USER"]}, {headers: {
-      'Authorization':
-      'Bearer ' + localStorage.getItem('token')
-    }});
+    return this.http.post(`${this.baseUrl}/admin/users`, {
+      ...user, authorities:
+        ["ROLE_USER"]
+    }, {
+      headers: {
+        'Authorization':
+          'Bearer ' + localStorage.getItem('token')
+      }
+    });
   };
 
   public getUser(login: string) {
-    console.log('##getUser', login);
-    //return this.http.get(`${this.baseUrl}/admin/users/${login}`, {headers: {
-      return this.http.get(`${this.baseUrl}/customers/${login}`, {headers: {
-      'Authorization':
-      'Bearer ' + localStorage.getItem('token')
-    }});
+
+    return this.http.get(`${this.baseUrl}/customers/${login}`, {
+      headers: {
+        'Authorization':
+          'Bearer ' + localStorage.getItem('token')
+      }
+    });
   }
 }

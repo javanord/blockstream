@@ -129,14 +129,9 @@ export class TradeBlotterComponent implements OnInit {
 
             const { payload1: tradingPl1, payload2: tradingPl2 } = this.depositWithdraw(this.selectedTrade.direction, this.selectedTrade, 'TRADING');
             const { payload1: counterPl1, payload2: counterPl2 } = this.depositWithdraw(this.selectedTrade.direction, this.selectedTrade, 'COUNTER');
-            console.log('##trading', tradingPl1, tradingPl2);
-            console.log('##counet', counterPl1, counterPl2);
-            const tradingLoginId = this.selectedTrade.tradingParty;
             
             this.customerService.depositWithdraw(tradingPl1, this.selectedTrade.tradingParty).subscribe(res => {
-              console.log(res);
               this.customerService.depositWithdraw(tradingPl2, this.selectedTrade.tradingParty).subscribe(res => {
-                console.log(res);
                 this.walletService.getUserWalletsDetails().subscribe((result: any) => {
                   this.walletService.userWallet.next(updateWallet(result));
                 })
@@ -146,9 +141,7 @@ export class TradeBlotterComponent implements OnInit {
            
 
             this.customerService.depositWithdraw(counterPl1, this.selectedTrade.counterParty).subscribe(res => {
-              console.log(res);
               this.customerService.depositWithdraw(counterPl2, this.selectedTrade.counterParty).subscribe(res => {
-                console.log(res);
               })
             })
           });

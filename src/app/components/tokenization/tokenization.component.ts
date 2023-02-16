@@ -93,7 +93,6 @@ export class TokenizationComponent implements OnInit {
         amount: +this.tokenForm.value['depositAmount'],
       }
     }
-    console.log(payload);
     const formData = this.tokenForm.value;
     const p1Address = this.selectedUser.lastName;
     const decimals = 18;

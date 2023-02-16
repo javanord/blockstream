@@ -1,7 +1,6 @@
 import { Wallet } from "src/models/wallet.model";
 
 export const findCurrency = (userWallet: Wallet, currencyCode: string, amount: number, transType: string): Wallet => {
-    console.log('##utils', userWallet, transType, currencyCode, amount);
     switch(currencyCode) {
         case 'GBP':
             const updatedAmountGBP = userWallet.gbp + amount;

@@ -38,7 +38,7 @@ export class RegistrationComponent implements OnInit {
     console.log('##output', output);
     this.authService.createUser(formData).subscribe((res: any) => {
       if(res?.login) {
-        alert(res?.firstName + ' created successfully');
+        alert(res?.firstName + ' registered successfully');
         this.customerForm.patchValue({
           firstName: '',
           email: '',

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Wallet } from 'src/models/wallet.model';
-import { WalletDetails } from 'src/models/walletdetails.model';
 import { WalletService } from 'src/app/services/wallet.service';
 import { updateWallet, findCurrency } from 'src/utils/utils';
 
@@ -43,12 +42,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
       if (data && !this.isAdmin) {
         this.walletService.getUserWalletsDetails().subscribe((result: any) => {
           this.walletService.userWallet.next(updateWallet(result));
-          // const { currencyCode, amount } = result;
-          // if (currencyCode) {
-          //   const lowerCaseCC = currencyCode.toLowerCase();
-          //   findCurrency(this.userWallet, lowerCaseCC, amount);
-          //   console.log('##userWallet', this.userWallet);
-          // }
         })
       }
     })

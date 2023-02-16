@@ -4,8 +4,11 @@
       <img src="{{ logo }}" alt="logo" />
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-2 offset-md-10">
+  <div class="row user-info">
+    <div class="col-md-6">
+      <p class="login-user" *ngIf="loggedInUserName">Welcome {{loggedInUserName}}</p>
+    </div>
+    <div class="col-md-2 offset-md-4">
       <a class="text-white text-right log ps-0"
         (click)="logout()"
       >Logout</a>

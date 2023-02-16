@@ -3,8 +3,9 @@
 }
 
 h3 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   padding: 10px;
   color: rgb(236, 86, 169);
+  margin: 0;
 }

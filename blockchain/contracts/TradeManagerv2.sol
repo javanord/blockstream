@@ -11,8 +11,8 @@ contract TradeManagerv2 {
         address receiverCp;
         uint notional;
         uint contraNotional;
-        Direction direction;
-        uint rate;
+        string direction;
+        string rate;
         CUR_TYPE buyCur;
         CUR_TYPE sellCur;
         string tradeDate;
@@ -56,20 +56,22 @@ contract TradeManagerv2 {
     
         require (_tradesMapping[_tdHash].isExist, "Trade doesn't exist");
         require (_tradesMapping[_tdHash].state != State.Setteled, "Trade already settled");
-        _transfer( 
+        if(_transfer( 
             _tradesMapping[_tdHash].initiatorCp,
             _tradesMapping[_tdHash].receiverCp,
             _tradesMapping[_tdHash].buyCur,
             _tradesMapping[_tdHash].sellCur,
             _tradesMapping[_tdHash].notional,
             _tradesMapping[_tdHash].contraNotional            
-        );
-        emit TradeSettled(msg.sender, _tdHash, State.Setteled);
+        )) {
+            _tradesMapping[_tdHash].state = State.Setteled;
+        }
+        emit TradeSettled(msg.sender, _tdHash, _tradesMapping[_tdHash].state);
     }
 
     function _transfer(address p1, address p2,
                         CUR_TYPE buyCur, CUR_TYPE sellCur,
-                        uint buyAmt, uint sellAmt) internal returns (bool){
+                        uint buyAmt, uint sellAmt) internal returns (bool) {
 
         require(ACC_MAP[p1].isExist, "Account[from] not registered");
         require(ACC_MAP[p2].isExist, "Account[to] not registered");
@@ -96,8 +98,8 @@ contract TradeManagerv2 {
     }
 
 
-    function  createTrade(address p1, address p2, Direction _direction, 
-                    uint _rate, CUR_TYPE _buyCur, CUR_TYPE _sellCur, uint256 _notional,
+    function  createTrade(address p1, address p2, string memory _direction, 
+                    string memory _rate, CUR_TYPE _buyCur, CUR_TYPE _sellCur, uint256 _notional,
                      uint256 _contraNotional, string memory _tradeDate, string memory _valueDate) public returns(bytes32) {
          
          Trade memory newTrade = Trade({

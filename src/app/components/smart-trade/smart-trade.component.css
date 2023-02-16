@@ -35,6 +35,7 @@
   background: transparent;
   padding: 0;
   width: 100%;
+  color:#fff;
 }
 
 .select-toggle::after {
@@ -55,6 +56,7 @@
   -webkit-appearance: none;
   background: transparent;
   cursor: pointer;
+  color: #fff;
 }
 
 ::-webkit-calendar-picker-indicator {

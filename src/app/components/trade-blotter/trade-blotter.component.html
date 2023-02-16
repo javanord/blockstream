@@ -7,12 +7,26 @@
 
   <div class="row">
     <div class="col-md-16">
+      <!--Form section-->
+      <!-- <form [formGroup]="settleAffirmForm">
+        <div class="form-group">
+          <div class="my-3">
+            <label for="settle">Settle</label>
+            <input class="mx-3" id="settle" type="radio" value="settle" name="settleAffirmTrade" formControlName="settleAffirmTrade" />
+          </div>
+          <div>
+            <label for="affirm">Affirm</label>
+            <input class="mx-3" id="affirm" type="radio" value="affirm" name="settleAffirmTrade" formControlName="settleAffirmTrade" />
+          </div>
+          <div></div>
+        </div>
+      </form> -->
       <table class="table border border-white">
         <tr class="border border-white">
           <th>Select</th>
           <!--- <th>Trade Id</th> -->
-          <th>Counter Party</th>
           <th>Trading Party</th>
+          <th>Counter Party</th>
           <th>Buy/Sell</th>
           <th>Traded Currency</th>
           <th>Counter Currency</th>
@@ -22,26 +36,28 @@
           <th>Trade Date</th>
           <th>Value Date</th>
           <th>Status</th>
-          <th>Failure Reason</th>
+          <!-- <th>Failure Reason</th> -->
         </tr>
 
         <tr class="border border-white" *ngFor="let trade of smartTradesList">
-          <td></td>
+          <td>
+            <input class="mx-3" [checked]="trade.checked" [disabled]="(trade.tradingParty !== loggedInUser) || (trade.status === 'Settled')" (click)="toggleCheckbox(trade.id)" type="checkbox" [id]="trade.id" [name]="trade.tradingParty" />
+          </td>
           <!-- <td>{{ trade.id }}</td> -->
-          <td>{{ trade.counterParty }}</td>
           <td>{{ trade.tradingParty }}</td>
+          <td>{{ trade.counterParty }}</td>
           <td>{{ trade.direction }}</td>
           <td>{{ trade.currencyBuy }}</td>
           <td>{{ trade.currencySell }}</td>
           <td>{{ trade.amount }}</td>
           <td>{{ trade.rate }}</td>
           <td>{{ trade.contraAmount }}</td>
-          <td>{{ trade.tradeDate }}</td>
-          <td>{{ trade.valueDate }}</td>
+          <td class="sm-font">{{ trade.tradeDate }}</td>
+          <td class="sm-font">{{ trade.valueDate }}</td>
           <td>{{ trade.status }}</td>
-          <td>{{ trade.failureReason }}</td>
+          <!-- <td>{{ trade.failureReason }}</td>
           <td></td>
-          <td></td>
+          <td></td> -->
         </tr>
       </table>
     </div>
@@ -52,7 +68,7 @@
         Accept
       </button>
       <button type="button" class="btn button-sm btn-danger m-3">Reject</button> -->
-      <button type="button" class="btn button-sm btn-primary m-3">
+      <button (click)="settleTrade()" type="button" class="btn button-sm btn-primary m-3">
         Settle
       </button>
     </div>

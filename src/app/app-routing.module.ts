@@ -17,7 +17,7 @@ const routes: Routes = [
     {path:'trade-blotter',component: TradeBlotterComponent}
   ]},
   {path:'admin', component: AdmindashboardComponent ,children: [
-    {path: '', redirectTo: 'tokenization', pathMatch: 'full'},
+    {path: '', redirectTo: 'register', pathMatch: 'full'},
     {path: 'tokenization', component: TokenizationComponent},
     {path:'register',component: RegistrationComponent}
   ]}

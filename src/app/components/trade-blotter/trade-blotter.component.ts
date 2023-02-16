@@ -17,8 +17,8 @@ export class TradeBlotterComponent implements OnInit {
 
   private contractInstance: any;
 
-  constructor(private customerService: CustomerService, private contractService: ContractService, private walletService: WalletService) { 
-  
+  constructor(private customerService: CustomerService, private contractService: ContractService, private walletService: WalletService) {
+
   }
 
   ngOnInit(): void {
@@ -63,6 +63,55 @@ export class TradeBlotterComponent implements OnInit {
     }
   }
 
+  public depositWithdraw(direction: string, trade: any, party: string) {
+    let payload1;
+    let payload2;
+    if (party === 'TRADING') {
+      if (direction === 'sell') {
+        payload1 = {
+          currencyCode: trade.currencyBuy,
+          amount: -trade.amount
+        }
+        payload2 = {
+          currencyCode: trade.currencySell,
+          amount: trade.contraAmount
+        }
+      } else {
+        payload1 = {
+          currencyCode: trade.currencySell,
+          amount: -trade.contraAmount
+        }
+        payload2 = {
+          currencyCode: trade.currencyBuy,
+          amount: trade.amount
+        }
+      }
+    } else {
+      if (direction === 'sell') {
+        payload2 = {
+          currencyCode: trade.currencySell,
+          amount: -trade.contraAmount
+        }
+        payload1 = {
+          currencyCode: trade.currencyBuy,
+          amount: trade.amount
+        }
+      } else {
+        payload1 = {
+          currencyCode: trade.currencyBuy,
+          amount: -trade.amount
+        }
+        payload2 = {
+          currencyCode: trade.currencySell,
+          amount: trade.contraAmount
+        }
+      }
+    }
+
+    return { payload1, payload2 };
+
+  }
+
   public async settleTrade() {
     try {
       const selectedTradeId = this.selectedTrade.transactionId;
@@ -77,8 +126,30 @@ export class TradeBlotterComponent implements OnInit {
               }
               return trade;
             });
-            this.walletService.getUserWalletsDetails().subscribe((result: any) => {
-              this.walletService.userWallet.next(updateWallet(result));
+
+            const { payload1: tradingPl1, payload2: tradingPl2 } = this.depositWithdraw(this.selectedTrade.direction, this.selectedTrade, 'TRADING');
+            const { payload1: counterPl1, payload2: counterPl2 } = this.depositWithdraw(this.selectedTrade.direction, this.selectedTrade, 'COUNTER');
+            console.log('##trading', tradingPl1, tradingPl2);
+            console.log('##counet', counterPl1, counterPl2);
+            const tradingLoginId = this.selectedTrade.tradingParty;
+            
+            this.customerService.depositWithdraw(tradingPl1, this.selectedTrade.tradingParty).subscribe(res => {
+              console.log(res);
+              this.customerService.depositWithdraw(tradingPl2, this.selectedTrade.tradingParty).subscribe(res => {
+                console.log(res);
+                this.walletService.getUserWalletsDetails().subscribe((result: any) => {
+                  this.walletService.userWallet.next(updateWallet(result));
+                })
+              })
+            })
+
+           
+
+            this.customerService.depositWithdraw(counterPl1, this.selectedTrade.counterParty).subscribe(res => {
+              console.log(res);
+              this.customerService.depositWithdraw(counterPl2, this.selectedTrade.counterParty).subscribe(res => {
+                console.log(res);
+              })
             })
           });
         }

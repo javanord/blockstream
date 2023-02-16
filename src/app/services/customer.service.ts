@@ -45,4 +45,11 @@ export class CustomerService {
       'Bearer ' + localStorage.getItem('token')
     }})
   }
+
+  settleSmartTrade(payload: any, id: string) {
+    return this.http.patch(`${this.baseUrl}/smart-trades/${id}`, payload, {headers: {
+      'Authorization':
+      'Bearer ' + localStorage.getItem('token')
+    }})
+  }
 }

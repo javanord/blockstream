@@ -34,3 +34,11 @@ th {
 .row-heading {
   padding: 0 0 1.5rem;
 }
+
+table {
+  font-size: 12px;
+}
+
+.sm-font {
+  font-size: 10px;
+}

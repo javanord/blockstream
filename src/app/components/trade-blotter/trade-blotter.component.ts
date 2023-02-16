@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ethers } from 'ethers';
 import { ContractService } from 'src/app/services/contract.service';
 import { CustomerService } from 'src/app/services/customer.service';
+import { WalletService } from 'src/app/services/wallet.service';
+import { updateWallet } from 'src/utils/utils';
 
 @Component({
   selector: 'app-trade-blotter',
@@ -16,7 +17,9 @@ export class TradeBlotterComponent implements OnInit {
 
   private contractInstance: any;
 
-  constructor(private customerService: CustomerService, private contractService: ContractService) { }
+  constructor(private customerService: CustomerService, private contractService: ContractService, private walletService: WalletService) { 
+  
+  }
 
   ngOnInit(): void {
     this.customerService.getSmartTrades().subscribe((res: any) => {
@@ -24,11 +27,12 @@ export class TradeBlotterComponent implements OnInit {
       this.smartTradesList = this.smartTradesList.map(trade => {
         return { ...trade, checked: false }
       })
-
-      console.log('##smartTradeList', this.smartTradesList);
     })
 
     this.loggedInUser = localStorage.getItem('loggedInUser') as string;
+    if (this.loggedInUser) {
+      this.walletService.userId.next(this.loggedInUser);
+    }
 
     this.contractService.tradeManagerContractInstance.subscribe(contractInstance => {
       this.contractInstance = contractInstance;
@@ -57,24 +61,27 @@ export class TradeBlotterComponent implements OnInit {
         return { ...trade, checked };
       })
     }
-
-
-    console.log('##selectedTrade', this.selectedTrade);
   }
 
   public async settleTrade() {
     try {
       const selectedTradeId = this.selectedTrade.transactionId;
-      console.log('##selectedTradeId', selectedTradeId, typeof selectedTradeId);
       if (selectedTradeId) {
         this.settleTradeResponse = await this.contractInstance.settleTrade(selectedTradeId);
-        console.log('##settleTradeResponse', this.settleTradeResponse);
-        this.smartTradesList = this.smartTradesList.map(trade => {
-          if (trade.transactionId === selectedTradeId) {
-            trade.status = "Settled";
-          }
-          return trade;
-        })
+        if (this.settleTradeResponse) {
+          const payload = { id: this.selectedTrade.id, status: 'Settled' };
+          this.customerService.settleSmartTrade(payload, this.selectedTrade.id).subscribe((response: any) => {
+            this.smartTradesList = this.smartTradesList.map(trade => {
+              if (trade.id === response.id) {
+                return { ...trade, status: "Settled", checked: false };
+              }
+              return trade;
+            });
+            this.walletService.getUserWalletsDetails().subscribe((result: any) => {
+              this.walletService.userWallet.next(updateWallet(result));
+            })
+          });
+        }
       } else {
         console.log('##Transaction id not found');
       }

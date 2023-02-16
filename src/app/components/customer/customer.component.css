@@ -5,7 +5,7 @@
   color: aqua;
 }
 a {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   padding: 10px;
   color: rgb(236, 86, 169);
@@ -24,4 +24,11 @@ a {
 .login-user {
   color: #fff;
   font-weight: bold;
+  font-style: italic;
+  font-size: 18px;
+}
+
+.user-info {
+  margin-top: 2rem;
+  padding: 0 8px;
 }
